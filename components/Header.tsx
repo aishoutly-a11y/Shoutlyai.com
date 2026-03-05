@@ -1,31 +1,26 @@
 "use client";
-
+teho;
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { User, SparklesIcon, ChevronDown, Menu, X } from "lucide-react";
+import { motion } from "framer-motion";
 import ShoutlyLogo from "@/components/common/ShoutlyLogo";
-import { User } from "lucide-react";
-
 
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
     const pathname = usePathname();
 
+    // Icons for the floating background (You can add your specific icons here)
+    const icons = [User, SparklesIcon, User, SparklesIcon];
+
     useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 20);
-        };
+        const handleScroll = () => setIsScrolled(window.scrollY > 20);
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
-
-    const navigation = [
-        { name: "Home", href: "/" },
-        { name: "Features", href: "#features" },
-        { name: "Pricing", href: "#pricing" },
-        { name: "Contact", href: "/contact" },
-    ];
 
     const isActive = (path: string) => {
         if (path === "/" && pathname !== "/") return false;
@@ -33,105 +28,232 @@ export default function Header() {
     };
 
     return (
-        <header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-                ? "bg-white/70 backdrop-blur-xl border-b border-gray-100 py-3"
-                : "bg-transparent py-5"
-                }`}
-        >
-            <div className="max-w-7xl mx-auto px-6 sm:px-10">
-                <div className="flex justify-between items-center h-16">
+        <div className="relative bg-white font-arial py-10 text-gray-900 dark:text-white selection:text-white overflow-hidden">
+            {/* Navigation */}
+            <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
                     {/* Logo */}
-                    <div className="flex-shrink-0">
-                        <Link href="/">
-                            <ShoutlyLogo />
-                        </Link>
+                    <div className="relative w-28 h-10 sm:w-40 sm:h-14">
+                        <a href="/">
+                            <Image
+                                src="/images/logo.png"
+                                alt="Logo"
+                                fill
+                                className="object-contain"
+                            />
+                        </a>
                     </div>
 
-                    {/* Desktop Navigation */}
-                    <nav className="hidden md:flex items-center gap-10">
-                        {navigation.map((item) => (
-                            <Link
-                                key={item.name}
-                                href={item.href}
-                                className={`text-sm font-bold transition-all hover:text-brand-500 ${isActive(item.href)
-                                    ? "text-brand-500"
-                                    : "text-gray-900"
-                                    }`}
-                            >
-                                {item.name}
-                            </Link>
-                        ))}
-                    </nav>
+                    {/* Desktop Links */}
+                    <div className="hidden md:flex items-center gap-8 text-sm font-medium text-black">
+                        <Link href="/">Home</Link>
+                        <Link href="#features">Features</Link>
+                        <Link href="#who-we-help">Who We Help</Link>
+                        <Link href="#pricing">Pricing</Link>
 
-                    {/* CTA Buttons */}
-                    <div className="hidden md:flex items-center gap-6">
-                        <Link
-                            href="/signup"
-                            className="bg-black text-white px-8 py-3.5 rounded-2xl text-sm font-bold hover:bg-gray-800 transition-all shadow-lg shadow-black/5"
-                        >
-                            Get Started
-                        </Link>
-                        <Link
-                            href="/signin"
-                            className="flex items-center gap-2 px-2 py-2 text-gray-900 hover:text-brand-500 transition-colors"
-                        >
-                            <div className="w-10 h-10 border border-gray-200 rounded-xl flex items-center justify-center hover:border-brand-200 transition-all bg-white shadow-sm">
-                                <User className="w-5 h-5" />
+                        {/* Resources Dropdown */}
+                        <div className="relative group">
+                            <span className="cursor-pointer py-4">
+                                Resources
+                            </span>
+                            <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
+                                <Link
+                                    href="/blog"
+                                    className="block px-4 py-2 hover:bg-gray-100"
+                                >
+                                    Blog
+                                </Link>
+                                <Link
+                                    href="/help-center"
+                                    className="block px-4 py-2 hover:bg-gray-100"
+                                >
+                                    Help Center / FAQ
+                                </Link>
+                                <Link
+                                    href="/case-studies"
+                                    className="block px-4 py-2 hover:bg-gray-100"
+                                >
+                                    Case Studies
+                                </Link>
                             </div>
+                        </div>
+
+                        {/* Company Dropdown */}
+                        <div className="relative group">
+                            <span className="cursor-pointer py-4">Company</span>
+                            <div className="absolute top-full left-0 mt-2 w-44 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
+                                <Link
+                                    href="/about-us"
+                                    className="block px-4 py-2 hover:bg-gray-100"
+                                >
+                                    About Us
+                                </Link>
+                                <Link
+                                    href="/contact-us"
+                                    className="block px-4 py-2 hover:bg-gray-100"
+                                >
+                                    Contact
+                                </Link>
+                                <Link
+                                    href="/press-media"
+                                    className="block px-4 py-2 hover:bg-gray-100"
+                                >
+                                    Press
+                                </Link>
+                                <Link
+                                    href="/careers"
+                                    className="block px-4 py-2 hover:bg-gray-100"
+                                >
+                                    Careers
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Right side (Desktop only) */}
+                    <div className="hidden md:flex text-black items-center gap-4">
+                        <Link href="/sign-in" className="text-sm">
+                            Log In
+                        </Link>
+
+                        <Link
+                            href="/sign-up"
+                            className="px-5 py-2 bg-black text-white rounded-full text-sm font-medium"
+                        >
+                            Sign Up / Free Trial
                         </Link>
                     </div>
 
-                    {/* Mobile menu button */}
-                    <div className="flex items-center md:hidden">
-                        <button
-                            onClick={() => setIsOpen(!isOpen)}
-                            className="p-2 text-gray-900"
-                        >
-                            {isOpen ? (
-                                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-                            ) : (
-                                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
-                            )}
-                        </button>
-                    </div>
+                    {/* Hamburger (Mobile only) */}
+                    <button
+                        onClick={() => setMenuOpen(!menuOpen)}
+                        className="md:hidden text-2xl text-black"
+                    >
+                        ☰
+                    </button>
                 </div>
-            </div>
 
-            {/* Mobile menu */}
-            {isOpen && (
-                <div className="md:hidden bg-white border-b border-gray-100 shadow-xl overflow-hidden animate-in slide-in-from-top duration-300">
-                    <div className="px-6 py-8 space-y-4">
-                        {navigation.map((item) => (
+                {/* Mobile Menu */}
+                {menuOpen && (
+                    <div className="md:hidden bg-white border-t px-6 py-6 space-y-5">
+                        <Link
+                            href="/"
+                            className="block text-base text-black font-medium"
+                            onClick={() => setMenuOpen(false)}
+                        >
+                            Home
+                        </Link>
+                        <Link
+                            href="#features"
+                            className="block text-base text-black font-medium"
+                            onClick={() => setMenuOpen(false)}
+                        >
+                            Features
+                        </Link>
+                        <Link
+                            href="#who-we-help"
+                            className="block text-base text-black font-medium"
+                            onClick={() => setMenuOpen(false)}
+                        >
+                            Who We Help
+                        </Link>
+                        <Link
+                            href="#pricing"
+                            className="block text-base text-black font-medium"
+                            onClick={() => setMenuOpen(false)}
+                        >
+                            Pricing
+                        </Link>
+
+                        {/* Resources */}
+                        <div className="space-y-2 border border-gray-200 bg-white rounded-lg p-3">
+                            <p className="font-semibold text-black">
+                                Resources
+                            </p>
                             <Link
-                                key={item.name}
-                                href={item.href}
-                                className={`block text-lg font-bold ${isActive(item.href) ? "text-brand-500" : "text-gray-900"
-                                    }`}
-                                onClick={() => setIsOpen(false)}
+                                href="/blog"
+                                className="block text-sm text-gray-700"
+                                onClick={() => setMenuOpen(false)}
                             >
-                                {item.name}
+                                Blog
                             </Link>
-                        ))}
-                        <div className="pt-6 border-t border-gray-50 flex flex-col gap-4">
                             <Link
-                                href="/signup"
-                                className="w-full bg-black text-white py-4 rounded-2xl text-center font-bold"
-                                onClick={() => setIsOpen(false)}
+                                href="/help-center"
+                                className="block text-sm text-gray-700"
+                                onClick={() => setMenuOpen(false)}
                             >
-                                Get Started
+                                Help Center / FAQ
                             </Link>
                             <Link
-                                href="/signin"
-                                className="w-full border border-gray-200 text-gray-900 py-4 rounded-2xl text-center font-bold bg-white"
-                                onClick={() => setIsOpen(false)}
+                                href="/case-studies"
+                                className="block text-sm text-gray-700"
+                                onClick={() => setMenuOpen(false)}
                             >
-                                Sign In
+                                Case Studies
+                            </Link>
+                            <Link
+                                href="/free-tools"
+                                className="block text-sm text-gray-700"
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                Free Tools
+                            </Link>
+                        </div>
+
+                        {/* Company */}
+                        <div className="space-y-2 border border-gray-200 bg-white rounded-lg p-3">
+                            <p className="font-semibold text-black">Company</p>
+                            <Link
+                                href="/about"
+                                className="block text-sm text-gray-700"
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                About Us
+                            </Link>
+                            <Link
+                                href="/contact"
+                                className="block text-sm text-gray-700"
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                Contact
+                            </Link>
+                            <Link
+                                href="/press"
+                                className="block text-sm text-gray-700"
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                Press
+                            </Link>
+                            <Link
+                                href="/careers"
+                                className="block text-sm text-gray-700"
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                Careers
+                            </Link>
+                        </div>
+
+                        {/* Divider */}
+                        <div className="border-t pt-4 space-y-3">
+                            <Link
+                                href="/sign-in"
+                                className="block text-center text-black text-sm font-medium"
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                Log In
+                            </Link>
+
+                            <Link
+                                href="/sign-up"
+                                className="block text-center bg-black text-white py-3 rounded-full text-sm font-medium"
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                Sign Up / Free Trial
                             </Link>
                         </div>
                     </div>
-                </div>
-            )}
-        </header>
+                )}
+            </nav>
+        </div>
     );
 }

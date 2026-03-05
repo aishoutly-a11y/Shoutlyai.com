@@ -10,6 +10,7 @@ import PricingSection from "@/components/PricingSection";
 import { CheckCircle, ArrowRight, Star, Zap, RefreshCcw } from "lucide-react";
 import HeroSection from "@/components/HeroSection";
 import { useEffect } from "react";
+import HeroPremium from "@/components/home1section";
 
 import {
     FaFacebookF,
@@ -42,6 +43,18 @@ export default function LandingPage() {
         FaWhatsapp,
         FaDiscord,
     ];
+    function more(id, id2, id3) {
+        document.getElementById(id).style.display = "block";
+        document.getElementById(id).style.animationDuration = "2s";
+        document.getElementById(id2).style.display = "none";
+        document.getElementById(id3).style.display = "block";
+    }
+    function less(id, id2, id3) {
+        document.getElementById(id).style.display = "none";
+        document.getElementById(id).style.animationDuration = "2s";
+        document.getElementById(id2).style.display = "block";
+        document.getElementById(id3).style.display = "none";
+    }
     const socials = [
         { icon: <FaTwitter />, label: "Twitter" },
         { icon: <FaInstagram />, label: "Instagram" },
@@ -74,12 +87,15 @@ export default function LandingPage() {
 
     const [industries, setIndustries] = useState<any[]>([]);
     const [loadingIndustries, setLoadingIndustries] = useState(true);
-    const [selectedSubIndustry, setSelectedSubIndustry] = useState<string | null>(null);
+    const [selectedSubIndustry, setSelectedSubIndustry] = useState<
+        string | null
+    >(null);
     const refreshImages = async () => {
         setLoadingImages(true);
 
         try {
-            let url = "https://ai-shoutly-backend.onrender.com/api/display-images";
+            let url =
+                "https://ai-shoutly-backend.onrender.com/api/display-images";
             if (selectedIndustry) {
                 url += `?industryId=${selectedIndustry}`;
             }
@@ -112,7 +128,8 @@ export default function LandingPage() {
             setLoadingImages(true);
 
             try {
-                let url = "https://ai-shoutly-backend.onrender.com/api/display-images";
+                let url =
+                    "https://ai-shoutly-backend.onrender.com/api/display-images";
                 if (selectedIndustry) {
                     url += `?industryId=${selectedIndustry}`;
                 }
@@ -157,7 +174,7 @@ export default function LandingPage() {
         const fetchIndustries = async () => {
             try {
                 const res = await fetch(
-                    "https://ai-shoutly-backend.onrender.com/api/industries/with-subindustries"
+                    "https://ai-shoutly-backend.onrender.com/api/industries/with-subindustries",
                 );
 
                 const data = await res.json();
@@ -194,9 +211,7 @@ export default function LandingPage() {
                     const startY = Math.random() * 100;
 
                     return (
-                        <div key={i}
-                            className="absolute"
-                        >
+                        <div key={i} className="absolute">
                             <div className="text-gray-400/30 text-2xl md:text-3xl bg-white/40 backdrop-blur-md p-4 rounded-full shadow-lg">
                                 <Icon />
                             </div>
@@ -206,470 +221,39 @@ export default function LandingPage() {
 
                 {/* AI SPARK BUBBLES */}
                 {[...Array(10)].map((_, i) => (
-                    <div
-                        className="absolute"
-                    >
+                    <div className="absolute">
                         <div className="p-3 rounded-full bg-gradient-to-r from-blue-400/30 to-purple-500/30 backdrop-blur-md">
                             <SparklesIcon className="w-6 h-6 text-purple-500/40" />
                         </div>
                     </div>
                 ))}
             </div>
-            {/* Navigation */}
-            <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
-
-                    {/* Logo */}
-                    <div className="relative w-28 h-10 sm:w-40 sm:h-14">
-                        <Image src="/images/logo.png" alt="Logo" fill className="object-contain" />
-                    </div>
-
-                    {/* Desktop Links */}
-                    <div className="hidden md:flex items-center gap-8 text-sm font-medium text-black">
-                        <Link href="/">Home</Link>
-                        <Link href="#features">Features</Link>
-                        <Link href="#who-we-help">Who We Help</Link>
-                        <Link href="#pricing">Pricing</Link>
-
-                        {/* Resources Dropdown */}
-                        <div className="relative group">
-                            <span className="cursor-pointer">Resources</span>
-                            <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
-                                <Link href="/blog" className="block px-4 py-2 hover:bg-gray-100">Blog</Link>
-                                <Link href="/help-center" className="block px-4 py-2 hover:bg-gray-100">Help Center / FAQ</Link>
-                                <Link href="/case-studies" className="block px-4 py-2 hover:bg-gray-100">Case Studies</Link>
-                                <Link href="/free-tools" className="block px-4 py-2 hover:bg-gray-100">Free Tools</Link>
-                            </div>
-                        </div>
-
-                        {/* Company Dropdown */}
-                        <div className="relative group">
-                            <span className="cursor-pointer">Company</span>
-                            <div className="absolute top-full left-0 mt-2 w-44 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
-                                <Link href="/about-us" className="block px-4 py-2 hover:bg-gray-100">About Us</Link>
-                                <Link href="/contact-us" className="block px-4 py-2 hover:bg-gray-100">Contact</Link>
-                                <Link href="/press-media" className="block px-4 py-2 hover:bg-gray-100">Press</Link>
-                                <Link href="/careers" className="block px-4 py-2 hover:bg-gray-100">Careers</Link>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Right side (Desktop only) */}
-                    <div className="hidden md:flex text-black items-center gap-4">
-                        <Link href="/sign-in" className="text-sm">
-                            Log In
-                        </Link>
-
-                        <Link
-                            href="/sign-up"
-                            className="px-5 py-2 bg-black text-white rounded-full text-sm font-medium"
-                        >
-                            Sign Up / Free Trial
-                        </Link>
-                    </div>
-
-                    {/* Hamburger (Mobile only) */}
-                    <button
-                        onClick={() => setMenuOpen(!menuOpen)}
-                        className="md:hidden text-2xl text-black"
-                    >
-                        ☰
-                    </button>
-                </div>
-
-                {/* Mobile Menu */}
-                {menuOpen && (
-                    <div className="md:hidden bg-white border-t px-6 py-6 space-y-5">
-                        <Link href="/" className="block text-base text-black font-medium" onClick={() => setMenuOpen(false)}>Home</Link>
-                        <Link href="#features" className="block text-base text-black font-medium" onClick={() => setMenuOpen(false)}>Features</Link>
-                        <Link href="#who-we-help" className="block text-base text-black font-medium" onClick={() => setMenuOpen(false)}>Who We Help</Link>
-                        <Link href="#pricing" className="block text-base text-black font-medium" onClick={() => setMenuOpen(false)}>Pricing</Link>
-
-                        {/* Resources */}
-                        <div className="space-y-2 border border-gray-200 bg-white rounded-lg p-3">
-                            <p className="font-semibold text-black">Resources</p>
-                            <Link href="/blog" className="block text-sm text-gray-700" onClick={() => setMenuOpen(false)}>Blog</Link>
-                            <Link href="/help-center" className="block text-sm text-gray-700" onClick={() => setMenuOpen(false)}>Help Center / FAQ</Link>
-                            <Link href="/case-studies" className="block text-sm text-gray-700" onClick={() => setMenuOpen(false)}>Case Studies</Link>
-                            <Link href="/free-tools" className="block text-sm text-gray-700" onClick={() => setMenuOpen(false)}>Free Tools</Link>
-                        </div>
-
-                        {/* Company */}
-                        <div className="space-y-2 border border-gray-200 bg-white rounded-lg p-3">
-                            <p className="font-semibold text-black">Company</p>
-                            <Link href="/about" className="block text-sm text-gray-700" onClick={() => setMenuOpen(false)}>About Us</Link>
-                            <Link href="/contact" className="block text-sm text-gray-700" onClick={() => setMenuOpen(false)}>Contact</Link>
-                            <Link href="/press" className="block text-sm text-gray-700" onClick={() => setMenuOpen(false)}>Press</Link>
-                            <Link href="/careers" className="block text-sm text-gray-700" onClick={() => setMenuOpen(false)}>Careers</Link>
-                        </div>
-
-                        {/* Divider */}
-                        <div className="border-t pt-4 space-y-3">
-                            <Link
-                                href="/sign-in"
-                                className="block text-center text-black text-sm font-medium"
-                                onClick={() => setMenuOpen(false)}
-                            >
-                                Log In
-                            </Link>
-
-                            <Link
-                                href="/sign-up"
-                                className="block text-center bg-black text-white py-3 rounded-full text-sm font-medium"
-                                onClick={() => setMenuOpen(false)}
-                            >
-                                Sign Up / Free Trial
-                            </Link>
-                        </div>
-                    </div>
-                )}
-            </nav>
-
-
-            {/* Hero Section */}
-            <header className="pt-32 pb-40 px-6 relative overflow-hidden bg-white">
-                {/* Background Image with subtle floating animation */}
-                <motion.div
-                    className="absolute inset-0 bg-cover bg-center opacity-[0.6]"
-                    style={{ backgroundImage: "url('images/sky.jpg')" }}
-                    animate={{ y: [0, -20, 0] }}
-                    transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-                />
-
-
-                {/* Gradient Glow */}
-                <motion.div
-                    className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-500/10 blur-[120px] rounded-full translate-x-1/3 -translate-y-1/3 pointer-events-none"
-                    animate={{ rotate: [0, 15, -15, 0] }}
-                    transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                />
-
-
-                {/* Content */}
-                <div className="max-w-7xl mx-auto text-center relative z-10">
-                    <motion.span
-                        className="inline-flex items-center gap-2 py-2 px-4 rounded-full
-               bg-white/60 backdrop-blur-sm text-blue-600
-               text-[10px] uppercase tracking-widest mb-8
-               border border-blue-200"
-                        style={{ fontFamily: "Arial", fontWeight: 600 }}
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1 }}
-                    >
-                        <SparklesIcon className="w-4 h-4 text-blue-600" />
-                        AI-Powered Content Generation
-                    </motion.span>
-
-
-                    <motion.h1
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-                        className="text-5xl md:text-7xl lg:text-6xl font-normal mb-8 tracking-tight leading-[1.05]"
-
-
-                    >
-                        <h1 className="text-3xl sm:text-4xl md:text-6xl font-normal mb-6 leading-tight">
-
-
-                            {/* Generate */}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-purple-700">
-                                Generate{" "}
-                            </span>
-
-
-                            {/* 365 Days */}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-pink-500">
-                                365 Days{" "}
-                            </span>
-
-
-                            {/* of Social Content, Brand */}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-black">
-                                of Social Content, Brand
-                            </span>
-
-
-                            <br />
-
-
-                            {/* Designs, Reels & Hashtags - in Minutes. */}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-black">
-                                Designs, Reels & Hashtags — in Minutes.
-                            </span>
-                        </h1>
-
-
-                    </motion.h1>
-                    <motion.div
-                        className="text-xl md:text-xl text-[#000000] dark:text-black mb-12 max-w-2xl mx-auto font-normal leading-relaxed space-y-3"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, delay: 0.6 }}
-                    >
-                        <p>Upload your logo → Enter one prompt → Get 365 days of AI-built content</p>
-                        <p className="text-lg text-blue-600 font-light whitespace-nowrap overflow-hidden text-ellipsis">
-                            Images • Reels • Captions • Hashtags • Auto Scheduling
-                        </p>
-
-
-                    </motion.div>
-                    {/* Action Buttons */}
-                    <div className="flex flex-row justify-center gap-4 flex-wrap mb-6">
-
-
-                        {/* Try Free Button */}
-                        <button
-                            className="flex items-center gap-2 px-6 py-3 rounded-full bg-[#000000] text-white hover:opacity-90 transition"
-                            style={{ fontFamily: "Arial", fontWeight: 400 }}
-                        >
-                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" />
-                            </svg>
-                            <span className="text-sm">Try Free</span>
-                        </button>
-
-
-                        <button
-                            className="flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black border border-gray-300 hover:bg-gray-50 transition"
-                            style={{ fontFamily: "Arial", fontWeight: 400 }}
-                        >
-                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M8 5v14l11-7z" />
-                            </svg>
-                            <span className="text-sm">Watch Video</span>
-                        </button>
-
-
-                    </div>
-
-
-                    {/* Social Icons */}
-                    <div className="flex items-center justify-center gap-6 mt-6">
-                        {/** Facebook */}
-                        <motion.a
-                            href="#"
-                            aria-label="Facebook"
-                            className="w-12 h-12 rounded-full bg-[#1877F2] flex items-center justify-center text-white transition-all"
-                            whileHover={{ scale: 1.2 }}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1.1 }}
-                        >
-                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.3c-1.3 0-1.7.8-1.7 1.6V12H16l-.4 3h-2.5v7A10 10 0 0 0 22 12z" />
-                            </svg>
-                        </motion.a>
-
-
-                        {/** Twitter */}
-                        <motion.a
-                            href="#"
-                            aria-label="Twitter"
-                            className="w-12 h-12 rounded-full bg-black flex items-center justify-center text-white transition-all"
-                            whileHover={{ scale: 1.2 }}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1.2 }}
-                        >
-                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M18.2 2H21l-6.6 7.5L22 22h-6.6l-4.7-6.1L5.3 22H2l7.1-8.1L2 2h6.8l4.2 5.6L18.2 2z" />
-                            </svg>
-                        </motion.a>
-
-
-                        {/** LinkedIn */}
-                        <motion.a
-                            href="#"
-                            aria-label="LinkedIn"
-                            className="w-12 h-12 rounded-full bg-[#0A66C2] flex items-center justify-center text-white transition-all"
-                            whileHover={{ scale: 1.2 }}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1.3 }}
-                        >
-                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M20.4 20.4h-3.5v-5.4c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.5H9.5V9h3.4v1.6h.1c.5-.9 1.7-1.8 3.5-1.8 3.7 0 4.4 2.4 4.4 5.6v6zM5.3 7.4a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM7 20.4H3.6V9H7v11.4z" />
-                            </svg>
-                        </motion.a>
-
-
-                        {/** YouTube */}
-                        <motion.a
-                            href="#"
-                            aria-label="YouTube"
-                            className="w-12 h-12 rounded-full bg-[#FF0000] flex items-center justify-center text-white transition-all"
-                            whileHover={{ scale: 1.2 }}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1.4 }}
-                        >
-                            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M23.5 6.2s-.2-1.6-.9-2.3c-.8-.9-1.7-.9-2.1-1C16.6 2.5 12 2.5 12 2.5h0s-4.6 0-8.5.4c-.4.1-1.3.1-2.1 1C.7 4.6.5 6.2.5 6.2S0 8.1 0 10v2c0 1.9.5 3.8.5 3.8s.2 1.6.9 2.3c.8.9 1.9.8 2.4.9 1.7.2 7.2.4 7.2.4s4.6 0 8.5-.4c.4-.1 1.3-.1 2.1-1 .7-.7.9-2.3.9-2.3s.5-1.9.5-3.8v-2c0-1.9-.5-3.8-.5-3.8zM9.5 14.5v-5l5 2.5-5 2.5z" />
-                            </svg>
-                        </motion.a>
-
-
-                        {/** Instagram */}
-                        <motion.a
-                            href="#"
-                            aria-label="Instagram"
-                            className="w-12 h-12 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white transition-all"
-                            whileHover={{ scale: 1.2 }}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1.5 }}
-                        >
-                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5zm0 7.3A2.8 2.8 0 1 1 14.8 12 2.8 2.8 0 0 1 12 14.8zm4.8-7.9a1.1 1.1 0 1 0 1.1 1.1 1.1 1.1 0 0 0-1.1-1.1z" />
-                            </svg>
-                        </motion.a>
-                    </div>
-                    {/* Rocket Accent */}
-                    <span className="absolute -bottom-4 -left-2 text-3xl sm:text-5xl select-none z-0">
-                        🚀
-                    </span>
-                </div>
-            </header>
-            {/*<AIPapersSection />*/}
-            {/* See It In Action Section */}
-            <section className="py-14 sm:py-20 bg-white overflow-hidden">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-
-                    {/* Title */}
-                    <div
-                        className="text-2xl sm:text-3xl md:text-5xl text-black font-arial mb-10 sm:mb-12"
-                    >
-                        See it in Action
-                    </div>
-
-                    {/* Flow Steps */}
-                    <div
-                        className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 mb-12 sm:mb-16"
-                    >
-                        {[
-                            { label: "Select Industry", color: "bg-blue-500" },
-                            { label: "Enter Prompt", color: "bg-violet-500" },
-                            { label: "AI Generates", color: "bg-pink-500" },
-                            { label: "Auto Schedule", color: "bg-green-500" },
-                        ].map((step, index) => (
-                            <div key={index}
-                                className="flex items-center gap-3"
-                            >
-                                <div className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-gray-300 text-xs sm:text-sm font-medium text-black bg-gray-100 shadow-sm backdrop-blur-md">
-
-                                    {/* Animated Dot */}
-                                    <div
-                                        className={`w-2.5 h-2.5 rounded-full ${step.color}`}
-                                    />
-
-                                    {step.label}
-                                </div>
-
-                                {/* Animated Arrow */}
-                                {index !== 3 && (
-                                    <div
-                                        className="hidden sm:inline text-gray-400 text-xl"
-                                    >
-                                        →
-                                    </div>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-                    {/* Video Section */}
-                    <div className="relative max-w-4xl mx-auto mb-14 sm:mb-20">
-                        <div className="relative aspect-video rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-200 shadow-xl bg-black group">
-
-                            <video
-                                ref={videoRef}
-                                className="w-full h-full object-cover cursor-pointer"
-                                src="videos/video.mp4"
-                                onClick={toggleVideo}
-                            />
-
-                            {!isPlaying && (
-                                <button
-                                    onClick={toggleVideo}
-                                    className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm"
-                                >
-                                    <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-white text-black flex items-center justify-center text-xl sm:text-2xl shadow-xl">
-                                        ▶
-                                    </div>
-                                </button>
-                            )}
-                        </div>
-                    </div>
-                    {/* Feature Cards */}
-                    <div
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"
-                    >
-                        {[
-                            { emoji: "⚡", title: "2-Minutes Setup" },
-                            { emoji: "🎨", title: "Auto-Branded" },
-                            { emoji: "📅", title: "365 Days Filled" },
-                            { emoji: "🌍", title: "Multi-Platform" },
-                        ].map((item) => (
-                            <div key={item.title}
-                                className="bg-gray-100 border border-gray-200 rounded-2xl p-6 sm:p-8 text-center shadow-sm hover:shadow-xl transition-all"
-                            >
-                                <div
-                                    className="text-3xl sm:text-4xl mb-3 sm:mb-4"
-                                >
-                                    {item.emoji}
-                                </div>
-
-                                <h3 className="text-base sm:text-lg font-semibold text-black">
-                                    {item.title}
-                                </h3>
-                            </div>
-                        ))}
-                    </div>
-
-                </div>
-            </section>
             <section className="py-14 sm:py-24 bg-white text-black overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6">
-
                     {/* Floating Badge */}
-                    <div
-                        className="flex justify-center mb-5 sm:mb-6"
-
-                    >
-                        <div
-                            className="inline-flex items-center gap-2 px-4 py-2 sm:px-5 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs sm:text-sm font-semibold shadow-lg"
-                        >
+                    <div className="flex justify-center mb-5 sm:mb-6">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 sm:px-5 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs sm:text-sm font-semibold shadow-lg">
                             <span>3 Simple Steps</span>
                         </div>
                     </div>
 
                     {/* Title Reveal Animation */}
-                    <div
-                        className="text-2xl sm:text-3xl md:text-5xl text-center mb-3 sm:mb-4"
-
-                    >
+                    <div className="text-2xl sm:text-3xl md:text-5xl text-center mb-3 sm:mb-4">
                         Generate Your Year of Content
                     </div>
 
                     {/* Subtitle */}
-                    <div
-                        className="text-center text-gray-600 text-sm sm:text-base max-w-2xl mx-auto mb-10 sm:mb-16 px-2"
-                    >
-                        One prompt, 365 days of posts. Including local festivals & events.
+                    <div className="text-center text-gray-600 text-sm sm:text-base max-w-2xl mx-auto mb-10 sm:mb-16 px-2">
+                        One prompt, 365 days of posts. Including local festivals
+                        & events.
                     </div>
 
                     {/* Cards Row */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10">
-
                         {/* CARD 1 */}
-                        <div
-                            className="border border-gray-200 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-sm relative overflow-hidden"
-                        >
+                        <div className="border border-gray-200 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-sm relative overflow-hidden">
                             {/* AI scanning light */}
-                            <div
-                                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none"
-                            />
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
 
                             <div className="flex items-center gap-3 mb-5 sm:mb-6">
                                 <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-black text-white flex items-center justify-center text-sm font-semibold">
@@ -686,10 +270,13 @@ export default function LandingPage() {
                                     setSelectedIndustry(id);
 
                                     const selected = industries.find(
-                                        (ind: any) => String(ind.id) === String(id)
+                                        (ind: any) =>
+                                            String(ind.id) === String(id),
                                     );
 
-                                    setSubIndustries(selected?.subIndustries || []);
+                                    setSubIndustries(
+                                        selected?.subIndustries || [],
+                                    );
                                 }}
                                 className="w-full mb-6 sm:mb-8 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black text-sm sm:text-base"
                             >
@@ -699,10 +286,14 @@ export default function LandingPage() {
                                     <option>Loading industries...</option>
                                 ) : (
                                     industries.map((industry: any) => (
-                                        <option key={industry.id} value={industry.id}>
+                                        <option
+                                            key={industry.id}
+                                            value={industry.id}
+                                        >
                                             {industry.name}
-                                        </option>)
-                                    ))}
+                                        </option>
+                                    ))
+                                )}
                             </select>
 
                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
@@ -712,17 +303,24 @@ export default function LandingPage() {
                                     </p>
                                 ) : (
                                     subIndustries.map((sub, i) => {
-                                        const isActive = selectedSubIndustry === String(sub.id);
+                                        const isActive =
+                                            selectedSubIndustry ===
+                                            String(sub.id);
 
                                         return (
                                             <div
                                                 key={sub.id || i}
-                                                onClick={() => setSelectedSubIndustry(String(sub.id))}
+                                                onClick={() =>
+                                                    setSelectedSubIndustry(
+                                                        String(sub.id),
+                                                    )
+                                                }
                                                 className={`group cursor-pointer relative overflow-hidden rounded-xl sm:rounded-2xl p-4 sm:p-5 border transition-all duration-300
-                    ${isActive
-                                                        ? "border-black bg-gray-50 shadow-lg scale-[1.02]"
-                                                        : "border-gray-200 bg-white hover:shadow-xl hover:-translate-y-1"
-                                                    }`}
+                    ${
+                        isActive
+                            ? "border-black bg-gray-50 shadow-lg scale-[1.02]"
+                            : "border-gray-200 bg-white hover:shadow-xl hover:-translate-y-1"
+                    }`}
                                             >
                                                 {/* Gradient hover glow */}
                                                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-gradient-to-br from-purple-100/40 via-transparent to-blue-100/40" />
@@ -751,54 +349,1200 @@ export default function LandingPage() {
                         </div>
 
                         {/* CARD 2 */}
-                        <div
-                            className="border border-gray-200 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-sm bg-gray-100 relative overflow-hidden"
-                        >
+                        <div className="border border-gray-200 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-sm bg-gray-100 relative overflow-hidden">
                             {/* subtle animated glow */}
-                            <div
-                                className="absolute -top-20 -right-20 w-60 h-60 bg-purple-300 rounded-full blur-3xl opacity-30"
-                            />
+                            <div className="absolute -top-20 -right-20 w-60 h-60 bg-purple-300 rounded-full blur-3xl opacity-30" />
 
                             <div className="flex items-center gap-3 mb-5 sm:mb-6">
                                 <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-black text-white flex items-center justify-center text-sm font-semibold">
                                     2
                                 </span>
                                 <h3 className="text-lg sm:text-xl font-semibold">
-                                    Describe Your Brand
+                                    Describe Your Brand (the prompt)
                                 </h3>
                             </div>
 
                             <textarea
                                 className="w-full min-h-[140px] sm:min-h-[180px] p-4 bg-white rounded-2xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black resize-none text-sm sm:text-base mb-4"
-                                placeholder="I'm an architect- generate 365 instagram posts, reels and festival creatives."
+                                placeholder="Promote my coffee shop in Bangalore. Cozy vibe, cold brew specialist, local artist nights, Instagram-heavy audience."
                             />
 
                             <div className="flex flex-col sm:flex-row gap-3 mb-4">
-                                <button
-                                    className="px-4 py-2 rounded-lg bg-gray-300 text-black text-xs sm:text-sm font-medium"
-                                >
-                                    Create Health Photo
+                                <button className="px-4 py-2 rounded-lg bg-gray-300 text-black text-xs sm:text-sm font-medium">
+                                    Create Photos
                                 </button>
 
-                                <button
-                                    className="px-4 py-2 bg-gray-300 rounded-lg border border-black text-xs sm:text-sm font-medium"
-                                >
-                                    Create Reels Photo
+                                <button className="px-4 py-2 bg-gray-300 rounded-lg border border-black text-xs sm:text-sm font-medium">
+                                    Create Reels
                                 </button>
                             </div>
 
-                            <p className="text-xs sm:text-sm text-gray-500">
-                                <b>Hint:</b> Be specific about your services, target audience, and content style
+                            <p className="text-xs sm:text-sm px-20 text-gray-500">
+                                No credit card required • 2-min setup <br />
+                                100+ founders already automating
                             </p>
 
                             {/* Power CTA Button */}
-                            <button
-                                className="w-full mt-6 sm:mt-8 py-3 sm:py-4 rounded-2xl bg-gradient-to-r from-gray-300 to-gray-500 text-white text-base sm:text-lg font-semibold"
-                            >
+                            <button className="w-full mt-6 sm:mt-8 py-3 sm:py-4 rounded-2xl bg-gradient-to-r from-gray-300 to-gray-500 text-white text-base sm:text-lg font-semibold">
                                 Generate 365 Days of Content
                             </button>
                         </div>
+                    </div>
+                </div>
+            </section>
+            <section className="py-14 sm:py-24 bg-white overflow-hidden">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                    {/* Floating Badge */}
+                    <div className="flex justify-center mb-5 sm:mb-6"></div>
 
+                    {/* Title */}
+                    <h2 className="text-2xl sm:text-3xl md:text-5xl text-center text-black mb-3 sm:mb-4">
+                        Preview AI-Generated Posts Tailored for Your Business
+                    </h2>
+
+                    {/* Subtitle */}
+                    <p className="text-center text-gray-600 text-sm sm:text-base max-w-2xl mx-auto mb-10 sm:mb-16 px-2">
+                        Industry-specific templates that update instantly based
+                        on your selection
+                    </p>
+
+                    {/* Main Card */}
+                    <div className="relative bg-gradient-to-br from-white via-gray-50 to-gray-100 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-xl border border-gray-200 overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+
+                        {/* Top Controls */}
+                        <div className="flex flex-col gap-6 mb-8 sm:mb-10 relative z-10">
+                            {/* Tabs */}
+                            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+                                {[
+                                    "Images",
+                                    "Reels",
+                                    "Festivals & Occasions",
+                                ].map((tab, i) => (
+                                    <button
+                                        key={i}
+                                        className={`whitespace-nowrap px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition
+                    ${
+                        i === 0
+                            ? "bg-black text-white shadow-lg"
+                            : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"
+                    }`}
+                                    >
+                                        {tab}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Templates Grid */}
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                            {filteredImages.length === 0 ? (
+                                <p className="col-span-full text-center text-gray-500">
+                                    No images found
+                                </p>
+                            ) : (
+                                filteredImages.map((img, index) => (
+                                    <div
+                                        key={img.id || index}
+                                        className="relative w-full h-48 rounded-xl overflow-hidden"
+                                    >
+                                        <img
+                                            src={
+                                                img.file
+                                                    ? img.file.startsWith(
+                                                          "http",
+                                                      )
+                                                        ? img.file
+                                                        : `https://ai-shoutly-backend.onrender.com${img.file}`
+                                                    : img.url
+                                            }
+                                            alt={img.name || "Template"}
+                                            className="w-full h-full object-cover rounded-xl sm:rounded-2xl"
+                                        />
+                                        <span className="absolute bottom-2 left-2 text-white bg-black/50 px-2 py-1 text-xs rounded">
+                                            {img.name}
+                                        </span>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/*<AIPapersSection />*/}
+            {/* See It In Action Section */}
+            <section className="py-14 sm:py-20 bg-white overflow-hidden">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+                    {/* Feature Cards */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+                        {[
+                            { emoji: "⚡", title: "2-Minutes Setup" },
+                            { emoji: "🎨", title: "Auto-Branded" },
+                            { emoji: "📅", title: "365 Days Filled" },
+                            { emoji: "🌍", title: "Multi-Platform" },
+                        ].map((item) => (
+                            <div
+                                key={item.title}
+                                className="bg-gray-100 border border-gray-200 rounded-2xl p-6 sm:p-8 text-center shadow-sm hover:shadow-xl transition-all"
+                            >
+                                <div className="text-3xl sm:text-4xl mb-3 sm:mb-4">
+                                    {item.emoji}
+                                </div>
+
+                                <h3 className="text-base sm:text-lg font-semibold text-black">
+                                    {item.title}
+                                </h3>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <section className="py-24 bg-white overflow-hidden">
+                <div className="max-w-7xl mx-auto px-6 text-center">
+                    {/* Gradient Badge with Floating Particle Motion */}
+                    <div className="flex justify-center mb-6">
+                        <span className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white text-sm font-semibold shadow-lg">
+                            <div>
+                                <SparklesIcon className="w-4 h-4 text-white" />
+                            </div>
+                            Built for Every Industry
+                        </span>
+                    </div>
+
+                    {/* Title + Subtitle */}
+                    <h2 className="text-4xl md:text-5xl text-black mb-4">
+                        Who We Help
+                    </h2>
+
+                    <p className="text-gray-600 max-w-2xl mx-auto mb-16">
+                        Industry-specific content automation for businesses of
+                        all sizes
+                    </p>
+
+                    {/* Cards Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                        {/*[
+                            { title: "Health & Fitness", emoji: "💪" },
+                            { title: "Food & Beverage", emoji: "🍔" },
+                            { title: "Fashion & Lifestyle", emoji: "👗" },
+                            { title: "Real Estate & Construction", emoji: "🏗️" },
+                            { title: "Education & Coaching", emoji: "🎓" },
+                            { title: "Finance & Business Services", emoji: "💼" },
+                            { title: "Medical & Healthcare", emoji: "🩺" },
+                            { title: "Technology & IT Services", emoji: "💻" },
+                            { title: "Hospitality & Tourism", emoji: "🏨" },
+                            { title: "Automobile Industry", emoji: "🚗" },
+                            { title: "Beauty, Salon & Wellness", emoji: "💅" },
+                            { title: "Retail & E-Commerce", emoji: "🛒" },
+                        ].map((item, index) => (
+                            <div key={item.title || index*/}
+
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                💪
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Health & Fitness
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• Gym / Fitness Studio</li>
+                                <li>• Yoga Centre</li>
+                                <li>• Zumba / Aerobic Studio</li>
+                                <li>• CrossFit / Personal Trainer</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="Health"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                >
+                                    <li>• Physiotherapy Clinic</li>
+                                    <li>• Dietician / Nutritionist</li>
+                                    <li>• Wellness & Supplements</li>
+                                    <li>• Weight Loss / Body Transformation</li>
+                                </div>
+                            </ul>
+                            <script src="script.js"></script>
+
+                            {/* More Link */}
+                            <a
+                                id="more1"
+                                onClick={() => more("Health", "more1", "less1")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less1"
+                                style={{ display: "none" }}
+                                onClick={() => less("Health", "more1", "less1")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                🍔
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Food & Beverage
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• Restaurants (veg / multicuisine)</li>
+                                <li>• Restaurants (non-veg / multicuisine)</li>
+                                <li>• Cafes & Coffee Shops</li>
+                                <li>• Juice Bars / Smoothie Bars</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="food"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                >
+                                    <li>• Bakery / Cake Shop</li>
+                                    <li>• Cloud Kitchen</li>
+                                    <li>• Catering Services</li>
+                                    <li>• Food Trucks</li>
+                                    <li>• Sweets & Namkeen Stores</li>
+                                    <li>• Organic & Healthy Food Brands</li>
+                                </div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more2"
+                                onClick={() => more("food", "more2", "less2")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less2"
+                                style={{ display: "none" }}
+                                onClick={() => less("food", "more2", "less2")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+                        {/* 3rd item */}
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                👗
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Fashion & Lifestyle
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• Clothing Store / Boutique</li>
+                                <li>• Fashion Designer</li>
+                                <li>• Footwear</li>
+                                <li>• Watches / Jewelry</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="fashion"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                >
+                                    <li>• Perfume / Fragrance Brand</li>
+                                </div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more3"
+                                onClick={() =>
+                                    more("fashion", "more3", "less3")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less3"
+                                style={{ display: "none" }}
+                                onClick={() =>
+                                    less("fashion", "more3", "less3")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+                        {/* 4th item */}
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                🏗️
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Real Estate & Construction
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• Real Estate Agents</li>
+                                <li>• Developers / Builders</li>
+                                <li>• Farm Plots / Gated Communities</li>
+                                <li>• Interior Design</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="real"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                >
+                                    <li>• Architecture Firms</li>
+                                    <li>• Property Consultants</li>
+                                    <li>• Home Construction Materials</li>
+                                </div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more4"
+                                onClick={() => more("real", "more4", "less4")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less4"
+                                style={{ display: "none" }}
+                                onClick={() => less("real", "more4", "less4")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+                        {/* 5th item */}
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                🎓
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Education & Coaching
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• Schools & Colleges</li>
+                                <li>
+                                    • Coaching Institutes (NEET / JEE / UPSC /
+                                    CAT etc.)
+                                </li>
+                                <li>• Coding Academy / EdTech</li>
+                                <li>• Online Tutors</li>
+                                <li>• Pre-School / Montessori</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="edu"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                >
+                                    <li>• Skill Training Centres</li>
+                                    <li>• IELTS / Language Centres</li>
+                                </div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more5"
+                                onClick={() => more("edu", "more5", "less5")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less5"
+                                style={{ display: "none" }}
+                                onClick={() => less("edu", "more5", "less5")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+                        {/* 6th item */}
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                💼
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Finance & Business Services
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• CA / Tax / GST Services</li>
+                                <li>• Insurance Agents</li>
+                                <li>• Mutual Fund Advisors</li>
+                                <li>• Stock & Crypto Trading Services</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="finance"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                >
+                                    <li>• Business Consultants</li>
+                                    <li>• Accounting Firms</li>
+                                    <li>• Loan Agents</li>
+                                </div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more6"
+                                onClick={() =>
+                                    more("finance", "more6", "less6")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less6"
+                                style={{ display: "none" }}
+                                onClick={() =>
+                                    less("finance", "more6", "less6")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+                        {/* 7th item */}
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                🩺
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Medical & Healthcare
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• Hospitals & Clinics</li>
+                                <li>• Dentists</li>
+                                <li>• Dermatologists</li>
+                                <li>• Eye Clinics</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="medical"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                >
+                                    <li>• Pharmacy / Medical Stores</li>
+                                    <li>• Diagnostic Laboratories</li>
+                                    <li>• Home Nursing Services</li>
+                                </div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more7"
+                                onClick={() =>
+                                    more("medical", "more7", "less7")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less7"
+                                style={{ display: "none" }}
+                                onClick={() =>
+                                    less("medical", "more7", "less7")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+                        {/* 8th item */}
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                💻
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Technology & IT Services
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• SaaS Products</li>
+                                <li>• Website Development</li>
+                                <li>• App Development</li>
+                                <li>• Digital Marketing Agencies</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="tech"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                >
+                                    <li>• AI Tools</li>
+                                    <li>• Cyber Security</li>
+                                    <li>• Tech Startups</li>
+                                </div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more8"
+                                onClick={() => more("tech", "more8", "less8")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less8"
+                                style={{ display: "none" }}
+                                onClick={() => less("tech", "more8", "less8")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+                        {/* 9th item */}
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                🏨
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Hospitality & Tourism
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• Hotels / Resorts</li>
+                                <li>• Travel Agencies</li>
+                                <li>• Tour Packages</li>
+                                <li>• Homestays / Airbnb Hosts</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="hospitality"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                >
+                                    <li>• Car Rentals</li>
+                                    <li>• Adventure Tourism</li>
+                                </div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more9"
+                                onClick={() =>
+                                    more("hospitality", "more9", "less9")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less9"
+                                style={{ display: "none" }}
+                                onClick={() =>
+                                    less("hospitality", "more9", "less9")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+                        {/* 10th item */}
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                🚗
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Automobile Industry
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• Car Showrooms</li>
+                                <li>• Two-Wheeler Dealers</li>
+                                <li>• Auto Repair Workshops</li>
+                                <li>• Car Spa / Detailing</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="auto"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                >
+                                    <li>• Car Accessories & Parts</li>
+                                </div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more10"
+                                onClick={() => more("auto", "more10", "less10")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less10"
+                                style={{ display: "none" }}
+                                onClick={() => less("auto", "more10", "less10")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+                        {/* 11th item */}
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                💅
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Home & Lifestyle
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• Furniture Store</li>
+                                <li>• Home Decor Brand</li>
+                                <li>• Kitchenware</li>
+                                <li>• Electronics & Appliances</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="home"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                >
+                                    <li>• Cleaning / Pest Control</li>
+                                </div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more11"
+                                onClick={() => more("home", "more11", "less11")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less11"
+                                style={{ display: "none" }}
+                                onClick={() => less("home", "more11", "less11")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+                        {/* 12th item */}
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                🎉
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Events & Entertainment
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• Event Planners</li>
+                                <li>• Wedding Photographers</li>
+                                <li>• Videography / Drone Shoots</li>
+                                <li>• DJs / Bands</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="events"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                >
+                                    <li>• Stage Decor & Lighting</li>
+                                    <li>• Corporate Event Organizers</li>
+                                </div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more12"
+                                onClick={() =>
+                                    more("events", "more12", "less12")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less12"
+                                style={{ display: "none" }}
+                                onClick={() =>
+                                    less("events", "more12", "less12")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+
+                        {/* 13th item */}
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                🏔️
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Sports & Outdoor
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• Sports Academies</li>
+                                <li>• Cricket Training</li>
+                                <li>• Football Clubs</li>
+                                <li>• Swimming Schools</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="sports"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                >
+                                    <li>• Trekking & Adventure Gear</li>
+                                </div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more13"
+                                onClick={() =>
+                                    more("sports", "more13", "less13")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less13"
+                                style={{ display: "none" }}
+                                onClick={() =>
+                                    less("sports", "more13", "less13")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+                        {/* 14th item */}
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                🛍️
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Retail & E-commerce
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• Accessories (Bags)</li>
+                                <li>• Footwear</li>
+                                <li>• Gift Shops</li>
+                                <li>• Home Appliances</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="retail"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                >
+                                    <li>• Kids Clothing</li>
+                                    <li>• Laptops & Computers</li>
+                                    <li>• Men's Clothing</li>
+                                    <li>• Online Stores</li>
+                                    <li>• Smartphones</li>
+                                    <li>• Supermarkets</li>
+                                    <li>• Toy Stores</li>
+                                    <li>• Wearables</li>
+                                    <li>• Women's Clothing</li>
+                                </div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more14"
+                                onClick={() =>
+                                    more("retail", "more14", "less14")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less14"
+                                style={{ display: "none" }}
+                                onClick={() =>
+                                    less("retail", "more14", "less14")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+                        {/* 15th item */}
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                👤
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Personal Branding
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• Coaches / Trainers</li>
+                                <li>• Influencers</li>
+                                <li>• Motivational Speakers</li>
+                                <li>• Consultants</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="personal"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                >
+                                    <li>• Podcasters / Content Creators</li>
+                                </div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more15"
+                                onClick={() =>
+                                    more("personal", "more15", "less15")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less15"
+                                style={{ display: "none" }}
+                                onClick={() =>
+                                    less("personal", "more15", "less15")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+                        {/* 16th item */}
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                🏠
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Home Services
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• Electrician / Plumber</li>
+                                <li>• Cleaning Services</li>
+                                <li>• Solar Panels</li>
+                                <li>• Water Purifier Dealers</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="ser"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                >
+                                    <li>
+                                        • Interior Woodwork / Modular Kitchen
+                                    </li>
+                                </div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more16"
+                                onClick={() => more("ser", "more16", "less16")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less16"
+                                style={{ display: "none" }}
+                                onClick={() => less("ser", "more16", "less16")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+                        {/* 17th item */}
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                🤝
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                NGOs & Foundations
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• Charitable Trusts</li>
+                                <li>• Women & Child Welfare</li>
+                                <li>• Environmental Campaigns</li>
+                                <li>• Social Causes</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="ngo"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                ></div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more17"
+                                style={{ display: "none" }}
+                                onClick={() => more("ngo", "more17", "less17")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less17"
+                                style={{ display: "none" }}
+                                onClick={() => less("ngo", "more17", "less17")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+                        {/* 18th item */}
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                🏭
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Manufacturing & Industrial
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• Machinery Industries</li>
+                                <li>• Textile Production</li>
+                                <li>• Packaging & Printing</li>
+                                <li>• Wholesale Distribution</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="manu"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                ></div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more18"
+                                style={{ display: "none" }}
+                                onClick={() => more("manu", "more18", "less18")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less18"
+                                style={{ display: "none" }}
+                                onClick={() => less("manu", "more18", "less18")}
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+                        {/* 19th item */}
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}✨
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Beauty, Salon and Wellness
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• Ayurvedic & Holis</li>
+                                <li>• Beauty Courses</li>
+                                <li>• Grooming Services</li>
+                                <li>• Hair Care Men</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="beauty"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                >
+                                    <li>• Hair Care Women</li>
+                                    <li>• Makeup Services</li>
+                                    <li>• Nail Care & Art</li>
+                                    <li>• Skin Care Services</li>
+                                    <li>• Spa & Welness</li>
+                                </div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more19"
+                                onClick={() =>
+                                    more("beauty", "more19", "less19")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less19"
+                                style={{ display: "none" }}
+                                onClick={() =>
+                                    less("beauty", "more19", "less19")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+                        {/* 20th item */}
+                        <div className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden">
+                            {/* Emoji with micro-pulse */}
+                            <div className="text-4xl mb-4">
+                                {/*item.emoji*/}
+                                🚀
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="text-black mb-4">
+                                {/*item.title*/}
+                                Entrepreneurs & Startup Founders
+                            </h3>
+
+                            {/* List */}
+                            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                                <li>• Startup Founders</li>
+                                <li>• Business Owners</li>
+                                <li>• Solopreneurs</li>
+                                <li>• Digital Entrepreneurs</li>
+                                <div
+                                    style={{ display: "none" }}
+                                    id="entre"
+                                    className="text-sm text-gray-600 space-y-2 mb-4"
+                                >
+                                    <li>• Women Entrepreneurs</li>
+                                    <li>• Young Entrepreneurs</li>
+                                </div>
+                            </ul>
+
+                            {/* More Link */}
+                            <a
+                                id="more20"
+                                onClick={() =>
+                                    more("entre", "more20", "less20")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show more
+                            </a>
+                            <a
+                                id="less20"
+                                style={{ display: "none" }}
+                                onClick={() =>
+                                    less("entre", "more20", "less20")
+                                }
+                                className="text-sm font-medium text-blue-500 hover:text-black-600"
+                            >
+                                show less
+                            </a>
+                        </div>
+
+                        {/*))*/}
+                    </div>
+
+                    {/* Bottom CTA Button */}
+                    <div className="flex justify-center">
+                        <button className="px-10 h-14 rounded-full bg-black text-white text-sm font-semibold">
+                            Find Your Industry
+                        </button>
                     </div>
                 </div>
             </section>
@@ -819,7 +1563,8 @@ export default function LandingPage() {
 
                     {/* Subtitle */}
                     <p className="text-center text-gray-600 text-sm sm:text-base max-w-2xl mx-auto mb-10 sm:mb-16 px-2">
-                        Industry-specific templates that update instantly based on your selection
+                        Industry-specific templates that update instantly based
+                        on your selection
                     </p>
 
                     {/* Main Card */}
@@ -830,14 +1575,19 @@ export default function LandingPage() {
                         <div className="flex flex-col gap-6 mb-8 sm:mb-10 relative z-10">
                             {/* Tabs */}
                             <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-                                {["Images", "Reels", "Festivals & Occasions"].map((tab, i) => (
+                                {[
+                                    "Images",
+                                    "Reels",
+                                    "Festivals & Occasions",
+                                ].map((tab, i) => (
                                     <button
                                         key={i}
                                         className={`whitespace-nowrap px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition
-                    ${i === 0
-                                                ? "bg-black text-white shadow-lg"
-                                                : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"
-                                            }`}
+                    ${
+                        i === 0
+                            ? "bg-black text-white shadow-lg"
+                            : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"
+                    }`}
                                     >
                                         {tab}
                                     </button>
@@ -851,17 +1601,24 @@ export default function LandingPage() {
                                     placeholder="Search templates"
                                     className="w-full px-4 py-2 rounded-xl bg-white text-gray-800 placeholder-gray-400 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm"
                                     value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    onChange={(e) =>
+                                        setSearchTerm(e.target.value)
+                                    }
                                 />
 
                                 <select
                                     className="w-full sm:w-auto px-4 py-2 rounded-xl bg-white text-gray-800 border border-gray-300 focus:outline-none text-sm"
                                     value={selectedIndustry}
-                                    onChange={(e) => setSelectedIndustry(e.target.value)}
+                                    onChange={(e) =>
+                                        setSelectedIndustry(e.target.value)
+                                    }
                                 >
                                     <option value="">All Industries</option>
                                     {industries.map((industry: any) => (
-                                        <option key={industry.id} value={industry.id}>
+                                        <option
+                                            key={industry.id}
+                                            value={industry.id}
+                                        >
                                             {industry.name}
                                         </option>
                                     ))}
@@ -881,16 +1638,23 @@ export default function LandingPage() {
                         </div>
 
                         {/* Templates Grid */}
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-8 gap-4">
                             {filteredImages.length === 0 ? (
-                                <p className="col-span-full text-center text-gray-500">No images found</p>
+                                <p className="col-span-full text-center text-gray-500">
+                                    No images found
+                                </p>
                             ) : (
                                 filteredImages.map((img, index) => (
-                                    <div key={img.id || index} className="relative w-full h-48 rounded-xl overflow-hidden">
+                                    <div
+                                        key={img.id || index}
+                                        className="relative w-full h-48 rounded-xl overflow-hidden"
+                                    >
                                         <img
                                             src={
                                                 img.file
-                                                    ? img.file.startsWith("http")
+                                                    ? img.file.startsWith(
+                                                          "http",
+                                                      )
                                                         ? img.file
                                                         : `https://ai-shoutly-backend.onrender.com${img.file}`
                                                     : img.url
@@ -908,319 +1672,75 @@ export default function LandingPage() {
                     </div>
                 </div>
             </section>
-            <section className="py-24 bg-white overflow-hidden">
-                <div className="max-w-7xl mx-auto px-6 text-center">
-
-                    {/* Gradient Badge with Floating Particle Motion */}
-                    <div
-                        className="flex justify-center mb-6"
-                    >
-                        <span
-                            className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white text-sm font-semibold shadow-lg"
-                        >
-                            <div
-                            >
-                                <SparklesIcon className="w-4 h-4 text-white" />
-                            </div>
-                            Built for Every Industry
-                        </span>
-                    </div>
-
-                    {/* Title + Subtitle */}
-                    <h2
-                        className="text-4xl md:text-5xl text-black mb-4"
-
-                    >
-                        Who We Help
-                    </h2>
-
-                    <p
-                        className="text-gray-600 max-w-2xl mx-auto mb-16"
-
-                    >
-                        Industry-specific content automation for businesses of all sizes
-                    </p>
-
-                    {/* Cards Grid */}
-                    <div
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
-                    >
-                        {[
-                            { title: "Health & Fitness", emoji: "💪" },
-                            { title: "Food & Beverage", emoji: "🍔" },
-                            { title: "Fashion & Lifestyle", emoji: "👗" },
-                            { title: "Real Estate & Construction", emoji: "🏗️" },
-                            { title: "Education & Coaching", emoji: "🎓" },
-                            { title: "Finance & Business Services", emoji: "💼" },
-                            { title: "Medical & Healthcare", emoji: "🩺" },
-                            { title: "Technology & IT Services", emoji: "💻" },
-                            { title: "Hospitality & Tourism", emoji: "🏨" },
-                            { title: "Automobile Industry", emoji: "🚗" },
-                            { title: "Beauty, Salon & Wellness", emoji: "💅" },
-                            { title: "Retail & E-Commerce", emoji: "🛒" },
-                        ].map((item, index) => (
-                            <div key={item.title || index}
-                                className="rounded-3xl p-6 bg-white border border-gray-200 text-left cursor-pointer relative overflow-hidden"
-                            >
-                                {/* Emoji with micro-pulse */}
-                                <div
-                                    className="text-4xl mb-4"
-
-                                >
-                                    {item.emoji}
-                                </div>
-
-                                {/* Title */}
-                                <h3
-                                    className="text-black mb-4"
-                                >
-                                    {item.title}
-                                </h3>
-
-                                {/* List */}
-                                <ul
-                                    className="text-sm text-gray-600 space-y-2 mb-4"
-
-                                >
-                                    <li>• Daily social media posts</li>
-                                    <li>• Reels & short videos</li>
-                                    <li>• Festival & promo creatives</li>
-                                </ul>
-
-                                {/* More Link */}
-                                <a
-                                    href="#"
-                                    className="text-sm font-medium text-blue-500 hover:text-black-600"
-
-                                >
-                                    +5 more
-                                </a>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Bottom CTA Button */}
-                    <div className="flex justify-center">
-                        <button
-                            className="px-10 h-14 rounded-full bg-black text-white text-sm font-semibold"
-                        >
-                            Find Your Industry
-                        </button>
-                    </div>
-                </div>
-            </section>
 
             {/* Pricing */}
             <div id="pricing">
                 {/* Assuming PricingSection is robust, otherwise wrap it */}
                 <PricingSection />
             </div>
-            <section className="relative py-32 px-6 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 overflow-hidden">
-
-                {/* Animated Glow Background */}
-                <div
-                    className="absolute top-0 right-0 w-[750px] h-[750px] bg-purple-400 rounded-full blur-[140px]"
-                />
-
-                <div
-                    className="absolute bottom-0 left-0 w-[650px] h-[650px] bg-blue-400 rounded-full blur-[140px]"
-                />
-
-                {/* Orbiting Icons Layer */}
-
-
-                <div className="max-w-7xl mx-auto text-center relative z-10">
-
-                    {/* Title Animation */}
-                    <h2
-                        className="text-3xl md:text-4xl font-semibold text-white mb-6 leading-tight"
-                    >
-                        Generate Content Using 10,000+ <br />
-                        AI Prompts
-                    </h2>
-
-                    {/* Subtitle */}
-                    <p
-                        className="md:text-xl text-white/90 mb-12"
-                    >
-                        In any tone of voice, for any industry
-                    </p>
-
-                    {/* CTA Button */}
-                    <div
-                    >
-                        <Link
-                            href="/sign-up"
-                            className="inline-flex items-center justify-center px-12 py-4 rounded-full bg-white text-blue-600 text-lg hover:scale-110 hover:shadow-[0_20px_60px_rgba(0,0,0,0.4)] transition-all duration-300 shadow-xl"
-                        >
-
-                            Create My Content
-                        </Link>
+            
+            <section className="py-14 sm:py-20 bg-white overflow-hidden">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+                    {/* Title */}
+                    <div className="text-2xl sm:text-3xl md:text-5xl text-black font-arial mb-10 sm:mb-12">
+                        See it in Action
                     </div>
+
+                    {/* Flow Steps */}
+                    <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 mb-12 sm:mb-16">
+                        {[
+                            { label: "Select Industry", color: "bg-blue-500" },
+                            { label: "Enter Prompt", color: "bg-violet-500" },
+                            { label: "AI Generates", color: "bg-pink-500" },
+                            { label: "Auto Schedule", color: "bg-green-500" },
+                        ].map((step, index) => (
+                            <div
+                                key={index}
+                                className="flex items-center gap-3"
+                            >
+                                <div className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-gray-300 text-xs sm:text-sm font-medium text-black bg-gray-100 shadow-sm backdrop-blur-md">
+                                    {/* Animated Dot */}
+                                    <div
+                                        className={`w-2.5 h-2.5 rounded-full ${step.color}`}
+                                    />
+
+                                    {step.label}
+                                </div>
+
+                                {/* Animated Arrow */}
+                                {index !== 3 && (
+                                    <div className="hidden sm:inline text-gray-400 text-xl">
+                                        →
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                    {/* Video Section */}
+                    <div className="relative max-w-4xl mx-auto mb-14 sm:mb-20">
+                        <div className="relative aspect-video rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-200 shadow-xl bg-black group">
+                            <video
+                                ref={videoRef}
+                                className="w-full h-full object-cover cursor-pointer"
+                                src="videos/video.mp4"
+                                onClick={toggleVideo}
+                            />
+
+                            {!isPlaying && (
+                                <button
+                                    onClick={toggleVideo}
+                                    className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+                                >
+                                    <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-white text-black flex items-center justify-center text-xl sm:text-2xl shadow-xl">
+                                        ▶
+                                    </div>
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                    {/* Feature Cards */}
                 </div>
             </section>
-
-            <section className="py-24 bg-white relative overflow-hidden">
-                {/* Animated Content Flow Lines */}
-
-
-                <div className="max-w-6xl mx-auto px-6 text-center relative z-10">
-
-                    {/* Title */}
-                    <h2
-                        className="text-4xl md:text-3xl text-black mb-4 font-semibold"
-                    >
-                        Follow Us — Where We Post the Future
-                    </h2>
-
-                    {/* Subtitle */}
-                    <p
-                        className="text-gray-600 mb-12"
-                    >
-                        Join our community for tips, updates, and inspiration
-                    </p>
-
-
-
-                </div>
-            </section>{/* Footer */}
-            <footer className="bg-black text-gray-400 py-16 md:py-20 border-t border-gray-800">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-6 gap-10 md:gap-12">
-
-                    {/* Column 1: Brand & Social */}
-                    <div className="md:col-span-1">
-                        <div className="flex items-center gap-2 mb-2">
-                            {/* Larger logo with white rounded background */}
-                            <div className="relative w-60 h-30 rounded-xl p-2">
-                                <Image
-                                    src="/images/logo2.png"
-                                    alt="ShoutlyAI Logo"
-                                    fill
-                                    className="object-contain opacity-80"
-                                />
-                            </div>
-                            {/* Slightly smaller text next to logo */}
-                        </div>
-                        <p className="text-sm font-medium mb-4">
-                            AI-powered social media automation.<br />
-                            One prompt → 365 days.
-                        </p>
-                        <p className="font-semibold mb-2">Follow Us</p>
-                        <div className="flex gap-3">
-                            {[FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube].map((Icon, i) => (
-                                <a
-                                    key={i}
-                                    href="#"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="w-8 h-8 rounded-full bg-gray-900 flex items-center justify-center text-gray-300 hover:bg-brand-500 hover:text-white transition-all"
-                                >
-                                    <Icon className="w-4 h-4" />
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Column 2: Who We Help */}
-                    <div className="md:col-span-2">
-                        <h4 className="font-semibold text-white mb-2">Who We Help</h4>
-
-                        <div className="grid grid-cols-2 gap-4 text-sm text-gray-400">
-                            {/* Local Business / Professional Services */}
-                            <div>
-                                <p className="font-medium mb-1">🏢 Local Business</p>
-                                <ul className="space-y-1">
-                                    <li>• Real Estate</li>
-                                    <li>• Food & Beverage</li>
-                                    <li>• Retail / E‑comm</li>
-                                    <li>• Beauty & Wellness</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <p className="font-medium mb-1">💼 Professional Services</p>
-                                <ul className="space-y-1">
-                                    <li>• Finance & Legal</li>
-                                    <li>• Education & Coaching</li>
-                                    <li>• Healthcare</li>
-                                    <li>• Business Consulting</li>
-                                </ul>
-                            </div>
-
-                            {/* Lifestyle Brands / Specialized Industries */}
-                            <div>
-                                <p className="font-medium mb-1">🏋️ Lifestyle Brands</p>
-                                <ul className="space-y-1">
-                                    <li>• Health & Fitness</li>
-                                    <li>• Hospitality & Tourism</li>
-                                    <li>• Pet Services</li>
-                                    <li>• Nonprofits</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <p className="font-medium mb-1">🏗️ Specialized Industries</p>
-                                <ul className="space-y-1">
-                                    <li>• Construction & Trades</li>
-                                    <li>• Automotive</li>
-                                    <li>• Technology</li>
-                                    <li>• Home Services</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Column 3: Product */}
-                    <div className="md:col-span-1">
-                        <h4 className="font-semibold text-white mb-2">Product</h4>
-                        <ul className="space-y-2 text-sm">
-                            <li><Link href="#" className="hover:text-white transition">All Features</Link></li>
-                            <li><Link href="#" className="hover:text-white transition">How It Works</Link></li>
-                            <li><Link href="#" className="hover:text-white transition">10k+ Templates</Link></li>
-                            <li><Link href="#" className="hover:text-white transition">Platforms</Link></li>
-                            <li><Link href="/pricing" className="hover:text-white transition">Plans & Pricing</Link></li>
-                        </ul>
-                    </div>
-
-                    {/* Column 4: Resources */}
-                    <div className="md:col-span-1">
-                        <h4 className="font-semibold text-white mb-2">Resources</h4>
-                        <ul className="space-y-2 text-sm">
-                            <li><Link href="#" className="hover:text-white transition">Blog</Link></li>
-                            <li><Link href="/help-center" className="hover:text-white transition">Help Center</Link></li>
-                            <li><Link href="/join-community" className="hover:text-white transition">Join Community</Link></li>
-                            <li><Link href="#" className="hover:text-white transition">Success Stories</Link></li>
-                            <li><Link href="/editorial-calendar" className="hover:text-white transition">Free Editorial Calendar</Link></li>
-                            <li><Link href="#" className="hover:text-white transition">Industry Content Guides</Link></li>
-                        </ul>
-                    </div>
-
-                    {/* Column 5: Company */}
-                    <div className="md:col-span-1">
-                        <h4 className="font-semibold text-white mb-2">Company</h4>
-                        <ul className="space-y-2 text-sm">
-                            <li>
-                                <Link href="/about-us" className="hover:text-white transition">
-                                    About Us
-                                </Link>
-                            </li>
-                            <li><Link href="/contact-us" className="hover:text-white transition">Contact Us</Link></li>
-                            <li><Link href="/press-media" className="hover:text-white transition">Press & Media</Link></li>
-                            <li><Link href="/careers" className="hover:text-white transition">Join Our Team</Link></li>
-                            <li><Link href="/affiliate-program" className="hover:text-white transition">Affiliate Program</Link></li>
-                        </ul>
-                    </div>
-
-                </div>
-
-                {/* Bottom Legal Bar */}
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-12 md:mt-16 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-3 text-center md:text-left">
-                    <p className="text-gray-500 text-xs">© 2026 ShoutlyAI. All rights reserved.</p>
-                    <div className="flex gap-4 text-gray-500 text-xs flex-wrap justify-center md:justify-start">
-                        <Link href="#" className="hover:text-white transition">Privacy Policy</Link>
-                        <Link href="#" className="hover:text-white transition">Terms of Service</Link>
-                        <Link href="#" className="hover:text-white transition">Cookie Settings</Link>
-                    </div>
-                </div>
-            </footer>
         </div>
     );
 }

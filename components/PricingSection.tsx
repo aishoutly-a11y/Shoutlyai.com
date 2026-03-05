@@ -1,171 +1,138 @@
-"use client";
+import React from 'react';
 
-import React, { useState } from "react";
-import Link from "next/link";
-
-export default function PricingSection() {
-    const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
-
-    return (
-        <section
-            id="pricing"
-            className="py-16 md:py-28 bg-gradient-to-b from-white via-blue-50 to-purple-50"
-        >
-            <div className="max-w-6xl mx-auto px-4 sm:px-6">
-
-                {/* Title */}
-                <div className="text-center mb-12 md:mb-16">
-                    <h2 className="text-2xl md:text-4xl text-black mb-4 font-semibold">
-                        Simple, Affordable Pricing
-                    </h2>
-                    <p className="text-gray-600 mb-8">
-                        Choose the plan that fits your needs
-                    </p>
-
-                    {/* Toggle */}
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3 bg-gray-100 rounded-full px-4 py-3 max-w-xs mx-auto">
-                        <div
-                            className="relative w-36 h-10 bg-white rounded-full shadow-inner cursor-pointer"
-                            onClick={() =>
-                                setBillingCycle(billingCycle === "monthly" ? "yearly" : "monthly")
-                            }
-                        >
-                            <div
-                                className={`absolute top-1 left-1 w-16 h-8 bg-white rounded-full shadow flex items-center justify-center text-black font-medium text-sm ${billingCycle === "yearly" ? "translate-x-16" : ""
-                                    }`}
-                            >
-                                {billingCycle === "monthly" ? "Monthly" : "Yearly"}
-                            </div>
-                        </div>
-
-                        <span className="px-2 py-1 text-green-700 text-sm font-semibold bg-green-100 rounded-full">
-                            Save 20%
-                        </span>
-                    </div>
-                </div>
-
-                {/* Pricing Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-
-                    {/* Starter Plan */}
-                    <div
-                        className="bg-white border border-gray-200 rounded-3xl p-6 md:p-10 shadow-lg"
-                    >
-                        <div>
-                            <h3 className="text-2xl text-black mb-1">Starter</h3>
-                            <p className="text-gray-500 mb-6">
-                                For Individual & Freelancer
-                            </p>
-
-                            <div className="mb-6">
-                                <div className="text-4xl text-black">
-                                    ₹899
-                                    <span className="text-base font-medium text-gray-500">
-                                        /month
-                                    </span>
-                                </div>
-                                <div className="text-sm text-gray-500">
-                                    $11 USD / month
-                                </div>
-                            </div>
-
-                            <div className="flex justify-center mb-8">
-                                <Link
-                                    href="/signup"
-                                    className="w-full sm:w-64 px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white text-center"
-                                >
-                                    Get Started
-                                </Link>
-                            </div>
-
-                            <ul className="space-y-4">
-                                {[
-                                    "365 AI-generated posts",
-                                    "Images, reels & festivals",
-                                    "Auto scheduling",
-                                    "Basic branding",
-                                ].map((item) => (
-                                    <li key={item} className="flex items-center gap-3 text-gray-700">
-                                        <span className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center text-white text-xs">
-                                            ✓
-                                        </span>
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
-
-                    {/* Growth Plan */}
-                    <div
-                        className="relative bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl p-6 md:p-10 shadow-xl"
-                    >
-                        <div>
-                            <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                                <span className="px-4 py-1 rounded-full bg-yellow-400 text-black text-xs">
-                                    Most Popular
-                                </span>
-                            </div>
-
-                            <h3 className="text-2xl text-white mb-1">Growth</h3>
-                            <p className="text-white/80 mb-6">
-                                For Small Business
-                            </p>
-
-                            <div className="mb-6">
-                                <div className="text-4xl text-white">
-                                    ₹1,499
-                                    <span className="text-base font-medium text-white/80">
-                                        /month
-                                    </span>
-                                </div>
-                                <div className="text-sm text-white/80">
-                                    $18 USD / month
-                                </div>
-                            </div>
-
-                            <div className="flex justify-center mb-8">
-                                <Link
-                                    href="/signup"
-                                    className="w-full sm:w-64 px-8 py-3 rounded-full bg-white text-blue-600 text-center"
-                                >
-                                    Get Started
-                                </Link>
-                            </div>
-
-                            <ul className="space-y-4">
-                                {[
-                                    "Unlimited content generation",
-                                    "Advanced branding",
-                                    "Multi-platform scheduling",
-                                    "Priority support",
-                                ].map((item) => (
-                                    <li key={item} className="flex items-center gap-3 text-white">
-                                        <span className="w-5 h-5 rounded-full bg-yellow-400 flex items-center justify-center text-black text-xs">
-                                            ✓
-                                        </span>
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* CTA */}
-            <div className="mt-16 md:mt-24 text-center px-4">
-                <p className="text-black mb-6 text-lg">
-                    🎉 Get Your Early Access at Launch Price!
-                </p>
-
-                <Link
-                    href="/signup"
-                    className="inline-flex items-center justify-center w-full sm:w-auto px-10 py-4 rounded-full bg-black text-white text-lg"
-                >
-                    Start Your Free Trial
-                </Link>
-            </div>
-        </section>
-    );
+interface PricingPlan {
+  name: string;
+  price: string;
+  period: string;
+  annualPrice: string;
+  features: string[];
+  disabledFeatures?: string[];
+  buttonText: string;
+  isPopular?: boolean;
 }
+
+const PricingSection: React.FC = () => {
+  const plans: PricingPlan[] = [
+    {
+      name: "SOLO",
+      price: "$29",
+      period: "per month",
+      annualPrice: "$278/year (save 20%)",
+      features: ["365 AI posts/year", "1 brand", "Email support"],
+      disabledFeatures: ["No reels", "ShoutlyAI watermark"],
+      buttonText: "START SOLO →",
+    },
+    {
+      name: "CREATOR",
+      price: "$79",
+      period: "per month",
+      annualPrice: "$758/year (save 20%)",
+      features: ["Unlimited posts", "12 reels/month", "1 brand", "✓ No watermark", "Priority support"],
+      buttonText: "START CREATOR →",
+    },
+    {
+      name: "BUSINESS",
+      price: "$197",
+      period: "per month",
+      annualPrice: "$1,891/year (save 20%)",
+      features: ["Unlimited posts", "Unlimited reels", "3 brands", "✓ Premium branding", "Priority support"],
+      isPopular: true,
+      buttonText: "START BUSINESS →",
+    },
+    {
+      name: "GROWTH",
+      price: "$497",
+      period: "per month",
+      annualPrice: "$4,771/year (save 20%)",
+      features: ["Unlimited posts", "Unlimited reels", "10 brands", "✓ White-label option", "API access"],
+      buttonText: "CONTACT SALES",
+    },
+  ];
+
+  const addOns = [
+    "Extra brand: $29/mo",
+    "White-label: $197/mo",
+    "API access: $497/mo",
+    "Custom AI training: $997 one-time"
+  ];
+
+  return (
+    <section className="bg-white py-20 px-4">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <span className="inline-block px-4 py-1 rounded-full border border-orange-200 bg-orange-50 text-orange-600 text-xs font-bold tracking-widest mb-6">
+            💰 INVESTMENT — REPLACE $5K AGENCY
+          </span>
+          <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-slate-900">
+            ONE PRICE. <span className="bg-gradient-to-r from-orange-500 to-red-600 bg-clip-text text-transparent">365 DAYS.</span>
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {plans.map((plan) => (
+            <div 
+              key={plan.name}
+              className={`relative p-8 rounded-3xl border transition-all duration-300 flex flex-col ${
+                plan.isPopular 
+                ? 'border-orange-500 bg-white shadow-[0_20px_50px_rgba(249,115,22,0.15)] ring-1 ring-orange-500' 
+                : 'border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-xl'
+              }`}
+            >
+              {plan.isPopular && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-orange-500 text-white text-[10px] font-black px-4 py-1 rounded-full tracking-widest uppercase shadow-lg">
+                  🔥 MOST POPULAR
+                </div>
+              )}
+
+              <div className="text-slate-500 font-bold text-sm mb-4 tracking-widest uppercase">{plan.name}</div>
+              <div className="text-5xl font-black text-slate-900 mb-1">{plan.price}</div>
+              <div className="text-xs text-slate-400 uppercase tracking-widest mb-6 font-semibold">{plan.period}</div>
+
+              <div className={`text-xs p-3 rounded-xl mb-8 text-center font-bold transition-colors ${
+                plan.isPopular 
+                ? 'bg-orange-500 text-white' 
+                : 'bg-white text-slate-600 border border-slate-200 shadow-sm'
+              }`}>
+                {plan.annualPrice}
+              </div>
+
+              <ul className="space-y-4 mb-10 flex-grow">
+                {plan.features.map((feature, i) => (
+                  <li key={i} className="text-sm flex items-start text-slate-700 font-medium">
+                    <span className="mr-3 text-orange-500 font-bold">✓</span>
+                    {feature}
+                  </li>
+                ))}
+                {plan.disabledFeatures?.map((feature, i) => (
+                  <li key={i} className="text-sm flex items-start text-slate-400">
+                    <span className="mr-3 opacity-50 font-bold">✗</span>
+                    <span className="opacity-70">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <button className={`w-full py-4 rounded-xl font-black text-sm transition-all tracking-tight active:scale-95 ${
+                plan.isPopular 
+                ? 'bg-orange-600 hover:bg-orange-700 text-white shadow-lg shadow-orange-200' 
+                : 'bg-slate-900 hover:bg-black text-white'
+              }`}>
+                {plan.buttonText}
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* Add-ons */}
+        <div className="flex flex-wrap justify-center gap-3 mt-16">
+          {addOns.map((addon, i) => (
+            <span key={i} className="px-5 py-2 bg-slate-100 border border-slate-200 rounded-full text-[11px] font-bold text-slate-500 hover:bg-white hover:border-orange-300 transition-all cursor-default">
+              {addon}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default PricingSection;
