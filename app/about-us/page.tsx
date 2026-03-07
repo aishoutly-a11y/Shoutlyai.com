@@ -1,319 +1,143 @@
-"use client";
-import Head from "next/head";
+import React from 'react';
 
-export default function AboutUSPage() {
-    return (
-        <div id="about-us">
-            <>
-                <Head>
-                    <title>ShoutlyAI — The Content Revolution</title>
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                    <link
-                        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap"
-                        rel="stylesheet"
-                    />
-                </Head>
+// --- Reusable Sub-Components ---
 
-                {/* Animated background blobs */}
-                <div className="blob" />
-                <div className="blob blob-2" />
+const Section = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
+  <section className={`bg-white rounded-[32px] p-8 md:p-12 my-8 shadow-sm border border-gray-100 overflow-hidden clear-both ${className}`}>
+    {children}
+  </section>
+);
 
-                <div className="page-container">
-                    {/* HERO */}
-                    <div className="section hero-bg" style={{ padding: "4rem" }}>
-                        <span className="pill">
-                            🚀 LAUNCHED 2026 — 100 EARLY USERS, 3,000+ POSTS GENERATED
-                        </span>
+const Pill = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
+  <span className={`inline-block bg-gray-100 text-orange-500 font-semibold px-5 py-2 rounded-full text-sm border border-gray-200 mb-6 ${className}`}>
+    {children}
+  </span>
+);
 
-                        <h1 className="headline-xl">
-                            WE DIDN'T <br />
-                            BUILD AN <span className="gradient-text">AGENCY.</span>
-                            <br />
-                            <span className="gradient-text-purple">WE KILLED IT.</span>
-                        </h1>
+const GradientText = ({ children, type = "orange" }: { children: React.ReactNode, type?: "orange" | "purple" | "blue" }) => {
+  const styles = {
+    orange: "from-orange-500 to-orange-400",
+    purple: "from-violet-500 to-fuchsia-500",
+    blue: "from-blue-500 to-cyan-500"
+  };
+  return (
+    <span className={`bg-gradient-to-br ${styles[type]} bg-clip-text text-transparent`}>
+      {children}
+    </span>
+  );
+};
 
-                        <p className="subhead hero-sub">
-                            One prompt = <span className="gradient-text strong">365 days</span>{" "}
-                            of content.
-                            <br />
-                            No designers. No strategists.{" "}
-                            <span className="gradient-text-purple">No burnout.</span>
-                        </p>
+// --- Main Page Component ---
 
-                        <div className="flex-row">
-                            <a href="#" className="cta-button">
-                                🔥 JOIN THE MOVEMENT
-                            </a>
-                            <a href="#" className="cta-secondary">
-                                ▶️ WATCH 2-MIN SETUP
-                            </a>
-                        </div>
+export default function LandingPage() {
+  return (
+    <div className="max-w-[1200px] mx-auto px-8 pt-8 pb-16 font-sans bg-[#faf9f6] text-gray-800">
 
-                        <div className="badges">
-                            <span className="badge-light">⚡ 100 early adopters</span>
-                            <span className="badge-light">📸 3,000+ reels generated</span>
-                            <span className="badge-light">🔥 0 agencies hired</span>
-                        </div>
-
-                        <div className="accent-bar" />
-                    </div>
-
-                    {/* PROBLEM */}
-                    <div className="section problem">
-                        <span className="pill">⚠️ THE PROBLEM</span>
-                        <h2 className="headline-lg">
-                            YOU'RE NOT A <br />
-                            <span className="gradient-text-purple">CONTENT FACTORY.</span>
-                        </h2>
-
-                        <div className="rhythm-text">
-                            <p>
-                                Hiring designers? <strong>💸 Expensive.</strong>
-                            </p>
-                            <p>
-                                Freelancers? <strong>🎭 Inconsistent.</strong>
-                            </p>
-                            <p>
-                                Posting every day? <strong>😩 Exhausting.</strong>
-                            </p>
-                            <p className="big-line">
-                                Creative fatigue <span className="gradient-text">is killing</span>{" "}
-                                your brand.
-                            </p>
-                        </div>
-
-                        <div className="card-grid three">
-                            <div className="stat-card">💸 $5K+ / month wasted</div>
-                            <div className="stat-card">⏰ 15 hours / week lost</div>
-                            <div className="stat-card">📉 80% posts get zero engagement</div>
-                        </div>
-                    </div>
-
-                    {/* SHIFT */}
-                    <div className="section center shift">
-                        <span className="pill">🔄 THE SHIFT</span>
-
-                        <h2 className="headline-lg">
-                            FROM <span className="strike">365 DAYS</span>
-                            <br />
-                            TO <span className="gradient-text big">ONE PROMPT.</span>
-                        </h2>
-
-                        <div className="badges center">
-                            <span className="badge-light orange">🗓️ 365 posts</span>
-                            <span className="badge-light purple">🎬 52 reels</span>
-                            <span className="badge-light blue">🎨 100+ creatives</span>
-                            <span className="badge-light green">📝 1,000+ captions</span>
-                        </div>
-
-                        <div className="big-center-text">
-                            <span className="gradient-text">ALL FROM</span>{" "}
-                            <span className="gradient-text-purple">ONE</span>{" "}
-                            <span className="gradient-text-blue">PROMPT.</span>
-                        </div>
-                    </div>
-
-                    {/* SYSTEM */}
-                    <div className="section">
-                        <span className="pill">⚙️ THE SYSTEM</span>
-                        <h2 className="headline-md">
-                            <span className="gradient-text">ZERO TO 365</span> IN 60 SECONDS.
-                        </h2>
-
-                        <div className="card-grid">
-                            <div className="stat-card">
-                                <div className="step">1️⃣</div>
-                                <h3>YOUR PROMPT</h3>
-                                <p>"I'm a realtor in Austin. Modern luxury. Funny tone."</p>
-                            </div>
-
-                            <div className="stat-card">
-                                <div className="step">⚡</div>
-                                <h3>AI ENGINE</h3>
-                                <p>Learns your brand. Your voice. Your festivals.</p>
-                            </div>
-
-                            <div className="stat-card">
-                                <div className="step">📦</div>
-                                <h3>FULL YEAR</h3>
-                                <p>365 posts. Videos. Captions. Strategy.</p>
-                            </div>
-
-                            <div className="stat-card">
-                                <div className="step">🤖</div>
-                                <h3>AUTO-SCHEDULE</h3>
-                                <p>Done. For real. Go live your life.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <style jsx global>{`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-
-        body {
-          font-family: "Inter", sans-serif;
-          background: linear-gradient(135deg, #faf9f6, #f5f0ea);
-          color: #1f2937;
-          overflow-x: hidden;
-        }
-
-        .page-container {
-          max-width: 1400px;
-          margin: auto;
-          padding: 2rem;
-        }
-
-        .section {
-          background: rgba(255, 255, 255, 0.75);
-          backdrop-filter: blur(10px);
-          border-radius: 48px;
-          padding: 4rem;
-          margin: 3rem 0;
-        }
-
-        .headline-xl {
-          font-size: clamp(3rem, 8vw, 6rem);
-          font-weight: 900;
-          line-height: 1;
-          margin-bottom: 1.5rem;
-        }
-
-        .headline-lg {
-          font-size: clamp(2.5rem, 6vw, 4rem);
-          font-weight: 800;
-          margin-bottom: 1.5rem;
-        }
-
-        .headline-md {
-          font-size: 2rem;
-          font-weight: 700;
-          margin-bottom: 1rem;
-        }
-
-        .gradient-text {
-          background: linear-gradient(135deg, #f97316, #fb923c, #fbbf24);
-          -webkit-background-clip: text;
-          color: transparent;
-        }
-
-        .gradient-text-purple {
-          background: linear-gradient(135deg, #8b5cf6, #d946ef);
-          -webkit-background-clip: text;
-          color: transparent;
-        }
-
-        .gradient-text-blue {
-          background: linear-gradient(135deg, #3b82f6, #06b6d4);
-          -webkit-background-clip: text;
-          color: transparent;
-        }
-
-        .pill {
-          display: inline-block;
-          padding: 0.6rem 1.4rem;
-          border-radius: 999px;
-          background: #fff;
-          color: #f97316;
-          font-weight: 700;
-          margin-bottom: 1rem;
-        }
-
-        .cta-button {
-          padding: 1rem 2rem;
-          border-radius: 999px;
-          background: linear-gradient(135deg, #f97316, #fb923c);
-          color: white;
-          text-decoration: none;
-          font-weight: 700;
-        }
-
-        .cta-secondary {
-          margin-left: 1rem;
-          padding: 1rem 2rem;
-          border-radius: 999px;
-          border: 2px solid #f97316;
-          text-decoration: none;
-        }
-
-        .card-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-          gap: 2rem;
-          margin-top: 2rem;
-        }
-
-        .stat-card {
-          padding: 2rem;
-          border-radius: 24px;
-          background: white;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        }
-
-        .blob {
-          position: fixed;
-          width: 500px;
-          height: 500px;
-          background: linear-gradient(135deg, #f97316, #fb923c);
-          filter: blur(100px);
-          opacity: 0.15;
-          border-radius: 50%;
-          z-index: -1;
-        }
-
-        .blob-2 {
-          right: 0;
-          bottom: 0;
-          background: linear-gradient(135deg, #3b82f6, #a855f7);
-        }
-
-        .flex-row {
-          display: flex;
-          gap: 1rem;
-          margin: 2rem 0;
-          flex-wrap: wrap;
-        }
-
-        .badges {
-          display: flex;
-          gap: 1rem;
-          flex-wrap: wrap;
-          margin-top: 2rem;
-        }
-
-        .badge-light {
-          padding: 0.5rem 1rem;
-          border-radius: 999px;
-          background: #fff;
-          border: 1px solid #f97316;
-        }
-
-        .center {
-          text-align: center;
-          justify-content: center;
-        }
-
-        .big-center-text {
-          font-size: 3rem;
-          font-weight: 900;
-          margin-top: 2rem;
-        }
-
-        .strike {
-          text-decoration: line-through;
-          color: #9ca3af;
-        }
-
-        .big {
-          font-size: 1.2em;
-        }
-      `}</style>
-            </>
+      {/* SECTION 1: HERO */}
+      <Section>
+        <Pill>🚀 LAUNCHED 2026 — 100 EARLY USERS, 3,000+ POSTS GENERATED</Pill>
+        <h1 className="text-5xl md:text-8xl font-extrabold tracking-tighter leading-[1.1] mb-6">
+          WE DIDN'T BUILD AN AGENCY.<br />
+          <GradientText>WE KILLED IT.</GradientText>
+        </h1>
+        <p className="text-xl text-gray-500 max-w-[600px] mb-8 leading-relaxed">
+          One prompt = <span className="text-orange-500 font-medium">365 days</span> of content. 
+          No designers. No strategists. No burnout.
+        </p>
+        <div className="flex flex-wrap gap-4 items-center">
+          <button className="bg-orange-500 text-white font-semibold px-10 py-4 rounded-full text-lg shadow-lg shadow-orange-500/20 hover:scale-105 transition-transform">
+            🔥 JOIN THE MOVEMENT
+          </button>
+          <button className="border-2 border-orange-500 text-gray-800 font-medium px-9 py-3.5 rounded-full hover:bg-orange-500 hover:text-white transition-all">
+            ▶️ WATCH 2-MIN SETUP
+          </button>
         </div>
-    );
-}
+        <div className="flex flex-wrap gap-4 mt-8">
+          {["⚡ 100 early adopters", "📸 3,000+ reels generated", "🔥 0 agencies hired"].map((text, i) => (
+            <span key={i} className="bg-gray-100 text-gray-600 px-5 py-2 rounded-full text-sm font-medium">
+              {text}
+            </span>
+          ))}
+        </div>
+      </Section>
 
+      {/* SECTION 2: THE PROBLEM */}
+      <Section>
+        <Pill>⚠️ THE PROBLEM</Pill>
+        <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
+          YOU'RE NOT A <GradientText type="purple">CONTENT FACTORY.</GradientText>
+        </h2>
+
+        <div className="bg-[#faf9f6] rounded-3xl p-8 my-8 space-y-3">
+          <p className="text-xl font-medium">Hiring designers? <strong className="text-orange-500">💸 Expensive.</strong></p>
+          <p className="text-xl font-medium">Freelancers? <strong className="text-orange-500">🎭 Inconsistent.</strong></p>
+          <p className="text-xl font-medium">Posting every day? <strong className="text-orange-500">😩 Exhausting.</strong></p>
+          <p className="text-2xl mt-4 font-bold"><GradientText>Creative fatigue is killing your brand.</GradientText></p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { icon: "💸", text: "$5K+ / month wasted" },
+            { icon: "⏰", text: "15 hours / week lost" },
+            { icon: "📉", text: "80% posts get zero engagement" }
+          ].map((item, i) => (
+            <div key={i} className="p-6 border border-gray-100 rounded-3xl hover:border-orange-500 hover:-translate-y-1 transition-all shadow-sm bg-white">
+              <div className="text-4xl mb-2">{item.icon}</div>
+              <div className="font-semibold">{item.text}</div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* SECTION 3: HOW IT WORKS */}
+      <Section>
+        <Pill>⚙️ THE SYSTEM</Pill>
+        <h2 className="text-3xl md:text-5xl font-bold mb-8"><GradientText>ZERO TO 365</GradientText> IN 60 SECONDS.</h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { step: "1️⃣", title: "YOUR PROMPT", desc: '"I\'m a realtor in Austin. Modern luxury."', color: "text-orange-500" },
+            { step: "⚡", title: "AI ENGINE", desc: "Learns your brand. Your voice.", color: "text-purple-500" },
+            { step: "📦", title: "FULL YEAR", desc: "365 posts. Videos. Strategy.", color: "text-blue-500" },
+            { step: "🤖", title: "AUTO-SCHEDULE", desc: "Done. Go live your life.", color: "text-emerald-500" }
+          ].map((item, i) => (
+            <div key={i} className="p-6 border border-gray-100 rounded-3xl text-center bg-white">
+              <div className="text-4xl mb-4">{item.step}</div>
+              <h3 className={`font-bold mb-2 ${item.color}`}>{item.title}</h3>
+              <p className="text-gray-500 text-sm">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* SECTION 4: VISION (DARK MODE) */}
+      <Section className="bg-gray-900 text-white border-none">
+        <Pill className="bg-gray-800 text-yellow-400 border-none">🔮 2026 AND BEYOND</Pill>
+        <h2 className="text-4xl md:text-6xl font-bold mb-6">
+          WE'RE DEMOCRATIZING<br />
+          <GradientText>CONTENT PRODUCTION.</GradientText>
+        </h2>
+        <p className="text-xl text-gray-400 max-w-[700px] mb-8">
+          Every business. Every creator. Everywhere. Not just the ones with agency budgets.
+        </p>
+        <div className="text-5xl font-extrabold mb-8">
+          <GradientText>100M</GradientText> <span className="text-sm text-gray-500 uppercase tracking-widest ml-2">Posts by 2027</span>
+        </div>
+      </Section>
+
+      {/* SECTION 5: FINAL CTA */}
+      <Section className="bg-gradient-to-br from-gray-900 to-black text-white text-center">
+        <Pill className="bg-gray-800 text-yellow-400 border-none">⚡ THE FUTURE IS HERE</Pill>
+        <h2 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+          STOP <span className="line-through text-gray-600">HIRING.</span><br />
+          <GradientText>START SHOUTING.</GradientText>
+        </h2>
+        <button className="mt-8 bg-orange-500 text-white font-bold px-12 py-5 rounded-full text-xl shadow-2xl shadow-orange-500/40 hover:scale-105 transition-transform">
+          🔥 GET EARLY ACCESS
+        </button>
+        <p className="mt-6 text-gray-500">No credit card. Just content.</p>
+      </Section>
+
+    </div>
+  );
+}

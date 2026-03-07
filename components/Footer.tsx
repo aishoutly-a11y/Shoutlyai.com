@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from "next/image";
-import ShoutlyLogo from "@/components/common/ShoutlyLogo";
 import { 
   Facebook, 
   Twitter, 
@@ -26,48 +25,62 @@ const Footer = () => {
     },
     {
       title: "Product",
-      links: ["All Features", "How It Works", "10k+ Templates", "Platforms", "Plans & Pricing"]
+      links: [
+        { label: "All Features"},
+        { label: "Who We Help", href: "/#who-we-help" },
+        { label: "Browse Our Library", href: "/#library" },
+        { label: "Generate 365 days Content", href: "/#generator" },
+        { label: "Plans & Pricing", href: "/#pricing" },
+      ]
     },
     {
       title: "Resources",
-      links: ["Blog", "Help Center", "Join Community", "Success Stories", "Free Editorial Calendar", "Industry Content Guides"]
+      links: [
+        { label: "Blog", href: "/blog" },
+        { label: "Help Center", href: "/help-center" },
+        { label: "Join Community", href: "/join-community" },
+        { label: "Success Stories", href: "/case-studies" },
+        { label: "Free Editorial Calendar", href: "/free-editorial" },
+      ]
     },
     {
       title: "Company",
-      links: ["About Us", "Contact Us", "Press & Media", "Join Our Team", "Affiliate Program"]
+      links: [
+        { label: "About Us", href: "/about-us" },
+        { label: "Contact Us", href: "/contact-us" },
+        { label: "Press & Media", href: "/press-media" },
+        { label: "Careers", href: "/careers" },
+        { label: "Affiliate Program", href: "/affiliate-program" }
+      ]
     }
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
+    { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61583485633639", label: "Facebook" },
+    { icon: Twitter, href: "https://x.com/shoutlyai", label: "Twitter" },
+    { icon: Instagram, href: "https://www.instagram.com/ai.shoutly/", label: "Instagram" },
+    { icon: Linkedin, href: "https://www.linkedin.com/company/shoutlyai/", label: "LinkedIn" },
     { icon: Youtube, href: "#", label: "YouTube" }
   ];
 
   const contactInfo = [
     { icon: Mail, text: "hello@shoutlyai.com", href: "mailto:hello@shoutlyai.com" },
-    { icon: Phone, text: "+1 (555) 123-4567", href: "tel:+15551234567" },
-    { icon: MapPin, text: "San Francisco, CA", href: "#" }
+    { icon: Phone, text: "+91 (990) 170-0660", href: "tel:+919901700660" },
+    { icon: MapPin, text: "New York | Bangalore", href: "#" }
   ];
 
   return (
     <footer className="bg-gradient-to-b from-gray-900 to-gray-950 text-white">
-      {/* Main Footer */}
       <div className="container mx-auto px-4 py-16">
+
         {/* Logo and Tagline */}
         <div className="mb-12">
           <div className="flex items-center gap-2 mb-4">
-            
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              {/* Logo */}
-              <div className="bg-white relative w-28 h-10 sm:w-40 sm:h-14">
-                  <a href="/">
-                      <Image src="/images/logo.png" alt="Logo" fill className="object-contain" />
-                  </a>
-              </div>
-            </span>
+            <div className="relative w-28 h-10 sm:w-40 sm:h-14">
+              <a href="/">
+                <Image src="/images/logo2.png" alt="Logo" fill className="object-contain" />
+              </a>
+            </div>
           </div>
           <p className="text-gray-400 max-w-md">
             AI-powered social media automation. One prompt → 365 days.
@@ -76,22 +89,23 @@ const Footer = () => {
 
         {/* Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
-          {/* Who We Help - Takes 2 columns on large screens */}
+
+          {/* Section 1: Who We Help (Spans 2 columns) */}
           <div className="lg:col-span-2">
-            <h3 className="text-lg font-semibold mb-6 text-white/90">Who We Help</h3>
+            <h3 className="text-lg font-semibold mb-6 text-white/90">{footerSections[0].title}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {footerSections[0].links.map((category, idx) => (
+              {(footerSections[0].links as any[]).map((category, idx) => (
                 <div key={idx}>
                   <h4 className="text-sm font-medium text-blue-400 mb-3">{category.category}</h4>
                   <ul className="space-y-2">
-                    {category.sublinks.map((link, linkIdx) => (
+                    {category.sublinks.map((linkText: string, linkIdx: number) => (
                       <li key={linkIdx}>
                         <a 
-                          href="#" 
+                          href={`/industries/${linkText.toLowerCase().replace(/\s+/g, '-')}`} 
                           className="text-gray-400 hover:text-white text-sm transition-colors duration-200 flex items-center group"
                         >
                           <ChevronRight className="w-3 h-3 mr-1 opacity-0 group-hover:opacity-100 transition-opacity" />
-                          {link}
+                          {linkText}
                         </a>
                       </li>
                     ))}
@@ -101,19 +115,19 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Other Sections */}
+          {/* Sections 2, 3, 4: Product, Resources, Company */}
           {footerSections.slice(1).map((section, idx) => (
             <div key={idx}>
               <h3 className="text-lg font-semibold mb-6 text-white/90">{section.title}</h3>
               <ul className="space-y-3">
-                {section.links.map((link, linkIdx) => (
+                {(section.links as any[]).map((link, linkIdx) => (
                   <li key={linkIdx}>
                     <a 
-                      href="#" 
+                      href={link.href} 
                       className="text-gray-400 hover:text-white text-sm transition-colors duration-200 flex items-center group"
                     >
                       <ChevronRight className="w-3 h-3 mr-1 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      {link}
+                      {link.label}
                     </a>
                   </li>
                 ))}
@@ -125,7 +139,6 @@ const Footer = () => {
         {/* Contact and Social Section */}
         <div className="mt-16 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            {/* Contact Info */}
             <div className="flex flex-wrap justify-center md:justify-start gap-6">
               {contactInfo.map((item, idx) => (
                 <a
@@ -139,7 +152,6 @@ const Footer = () => {
               ))}
             </div>
 
-            {/* Social Links */}
             <div className="flex items-center gap-4">
               <span className="text-sm text-gray-400">Follow Us:</span>
               <div className="flex gap-3">
@@ -148,6 +160,8 @@ const Footer = () => {
                     key={idx}
                     href={social.href}
                     aria-label={social.label}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
                   >
                     <social.icon className="w-4 h-4" />
@@ -165,15 +179,19 @@ const Footer = () => {
               © {new Date().getFullYear()} ShoutlyAI. All rights reserved.
             </p>
             <div className="flex gap-6">
-              <a href="#" className="text-gray-500 hover:text-gray-400 text-sm transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-gray-500 hover:text-gray-400 text-sm transition-colors">
-                Terms of Service
-              </a>
-              <a href="#" className="text-gray-500 hover:text-gray-400 text-sm transition-colors">
-                Cookie Policy
-              </a>
+              {[
+                { name: "Privacy Policy", href: "/policy" },
+                { name: "Terms of Service", href: "/terms" },
+                { name: "Cookie Policy", href: "/cookie" }
+              ].map((policy) => (
+                <a 
+                  key={policy.name} 
+                  href={policy.href} 
+                  className="text-gray-500 hover:text-[#f97316] text-sm transition-colors"
+                >
+                  {policy.name}
+                </a>
+              ))}
             </div>
           </div>
         </div>

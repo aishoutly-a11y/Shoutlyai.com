@@ -10,7 +10,8 @@ import PricingSection from "@/components/PricingSection";
 import { CheckCircle, ArrowRight, Star, Zap, RefreshCcw } from "lucide-react";
 import HeroSection from "@/components/HeroSection";
 import { useEffect } from "react";
-import HeroPremium from "@/components/home1section";
+import HeroPremium from "@/components/HeroSection";
+import Calender from "@/components/calender";
 
 import {
     FaFacebookF,
@@ -43,17 +44,44 @@ export default function LandingPage() {
         FaWhatsapp,
         FaDiscord,
     ];
-    function more(id, id2, id3) {
-        document.getElementById(id).style.display = "block";
-        document.getElementById(id).style.animationDuration = "2s";
-        document.getElementById(id2).style.display = "none";
-        document.getElementById(id3).style.display = "block";
+    function more(id: string, id2: string, id3: string) {
+        document.getElementById(id)!.style.display = "block";
+        document.getElementById(id)!.style.animationDuration = "2s";
+        document.getElementById(id2)!.style.display = "none";
+        document.getElementById(id3)!.style.display = "block";
     }
-    function less(id, id2, id3) {
-        document.getElementById(id).style.display = "none";
-        document.getElementById(id).style.animationDuration = "2s";
-        document.getElementById(id2).style.display = "block";
-        document.getElementById(id3).style.display = "none";
+    function less(id: string, id2: string, id3: string) {
+        document.getElementById(id)!.style.display = "none";
+        document.getElementById(id)!.style.animationDuration = "2s";
+        document.getElementById(id2)!.style.display = "block";
+        document.getElementById(id3)!.style.display = "none";
+    }
+    function useTypingEffect(words: string[], speed: number = 50, pause: number = 2000) {
+        const [index, setIndex] = React.useState(0);
+        const [subIndex, setSubIndex] = React.useState(0);
+        const [reverse, setReverse] = React.useState(false);
+
+        // Typing logic
+        React.useEffect(() => {
+            if (subIndex === words[index].length + 1 && !reverse) {
+                setTimeout(() => setReverse(true), pause);
+                return;
+            }
+
+            if (subIndex === 0 && reverse) {
+                setReverse(false);
+                setIndex((prev) => (prev + 1) % words.length);
+                return;
+            }
+
+            const timeout = setTimeout(() => {
+                setSubIndex((prev) => prev + (reverse ? -1 : 1));
+            }, reverse ? 1 : 15);
+
+            return () => clearTimeout(timeout);
+        }, [subIndex, index, reverse, words, speed, pause]);
+
+        return words[index].substring(0, subIndex);
     }
     const socials = [
         { icon: <FaTwitter />, label: "Twitter" },
@@ -202,6 +230,13 @@ export default function LandingPage() {
         fetchIndustries();
     }, []);
     console.log("Industries state:", industries);
+    const placeholders = [
+        "Promote my coffee shop in Bangalore. Cozy vibe, cold brew specialist...",
+        "Real estate agent in Austin. Luxury homes, modern architecture...",
+        "Personal trainer for busy CEOs. 15-min workouts, high energy...",
+    ];
+
+    const animatedPlaceholder = useTypingEffect(placeholders);
     return (
         <div className="relative bg-white dark:bg-gray-950 font-arial min-h-screen text-gray-900 dark:text-white selection:text-white overflow-hidden">
             {/* GLOBAL FLOATING AI + SOCIAL MEDIA BUBBLES */}
@@ -221,75 +256,64 @@ export default function LandingPage() {
 
                 {/* AI SPARK BUBBLES */}
                 {[...Array(10)].map((_, i) => (
-                    <div className="absolute">
+                    <div key={i} className="absolute">
                         <div className="p-3 rounded-full bg-gradient-to-r from-blue-400/30 to-purple-500/30 backdrop-blur-md">
                             <SparklesIcon className="w-6 h-6 text-purple-500/40" />
                         </div>
                     </div>
                 ))}
             </div>
-            <section className="py-14 sm:py-24 bg-white text-black overflow-hidden">
+            
+            <section id="generator" className="py-14 sm:py-24 bg-white text-slate-900 overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6">
-                    {/* Floating Badge */}
+                    {/* Floating Badge - Changed to Brand Orange Gradient */}
                     <div className="flex justify-center mb-5 sm:mb-6">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 sm:px-5 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs sm:text-sm font-semibold shadow-lg">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 sm:px-5 rounded-full bg-gradient-to-r from-orange-500 to-red-600 text-white text-xs sm:text-sm font-black tracking-widest uppercase shadow-lg shadow-orange-200">
                             <span>3 Simple Steps</span>
                         </div>
                     </div>
 
-                    {/* Title Reveal Animation */}
-                    <div className="text-2xl sm:text-3xl md:text-5xl text-center mb-3 sm:mb-4">
-                        Generate Your Year of Content
+                    {/* Title - Applied Brand Font Weight & Tracking */}
+                    <div className="text-3xl sm:text-4xl md:text-6xl text-center mb-3 sm:mb-4 font-black tracking-tighter text-slate-900">
+                        Generate Your <span className="bg-gradient-to-r from-orange-500 to-red-600 bg-clip-text text-transparent">Year of Content</span>
                     </div>
 
                     {/* Subtitle */}
-                    <div className="text-center text-gray-600 text-sm sm:text-base max-w-2xl mx-auto mb-10 sm:mb-16 px-2">
+                    <div className="text-center text-slate-500 text-sm sm:text-base max-w-2xl mx-auto mb-10 sm:mb-16 px-2 font-medium">
                         One prompt, 365 days of posts. Including local festivals
                         & events.
                     </div>
 
                     {/* Cards Row */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10">
-                        {/* CARD 1 */}
-                        <div className="border border-gray-200 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-sm relative overflow-hidden">
-                            {/* AI scanning light */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
-
+                        {/* CARD 1 - Industry Selection */}
+                        <div className="border border-slate-200 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-sm relative overflow-hidden bg-slate-50/50">
                             <div className="flex items-center gap-3 mb-5 sm:mb-6">
-                                <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-black text-white flex items-center justify-center text-sm font-semibold">
+                                {/* Step Number - Changed to Brand Slate */}
+                                <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-slate-900 text-white flex items-center justify-center text-sm font-black">
                                     1
                                 </span>
-                                <h3 className="text-lg sm:text-xl font-semibold">
+                                <h3 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
                                     Select your industry
                                 </h3>
                             </div>
+
                             <select
                                 value={selectedIndustry}
                                 onChange={(e) => {
                                     const id = e.target.value;
                                     setSelectedIndustry(id);
-
-                                    const selected = industries.find(
-                                        (ind: any) =>
-                                            String(ind.id) === String(id),
-                                    );
-
-                                    setSubIndustries(
-                                        selected?.subIndustries || [],
-                                    );
+                                    const selected = industries.find((ind: any) => String(ind.id) === String(id));
+                                    setSubIndustries(selected?.subIndustries || []);
                                 }}
-                                className="w-full mb-6 sm:mb-8 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black text-sm sm:text-base"
+                                className="w-full mb-6 sm:mb-8 px-4 py-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm sm:text-base font-medium text-slate-700"
                             >
                                 <option value="">Choose your industry</option>
-
                                 {loadingIndustries ? (
                                     <option>Loading industries...</option>
                                 ) : (
                                     industries.map((industry: any) => (
-                                        <option
-                                            key={industry.id}
-                                            value={industry.id}
-                                        >
+                                        <option key={industry.id} value={industry.id}>
                                             {industry.name}
                                         </option>
                                     ))
@@ -298,48 +322,30 @@ export default function LandingPage() {
 
                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
                                 {subIndustries.length === 0 ? (
-                                    <p className="text-sm text-gray-500 col-span-full text-center">
+                                    <p className="text-sm text-slate-400 col-span-full text-center py-10 font-medium">
                                         Select an industry to see sub-categories
                                     </p>
                                 ) : (
                                     subIndustries.map((sub, i) => {
-                                        const isActive =
-                                            selectedSubIndustry ===
-                                            String(sub.id);
-
+                                        const isActive = selectedSubIndustry === String(sub.id);
                                         return (
                                             <div
                                                 key={sub.id || i}
-                                                onClick={() =>
-                                                    setSelectedSubIndustry(
-                                                        String(sub.id),
-                                                    )
-                                                }
+                                                onClick={() => setSelectedSubIndustry(String(sub.id))}
                                                 className={`group cursor-pointer relative overflow-hidden rounded-xl sm:rounded-2xl p-4 sm:p-5 border transition-all duration-300
-                    ${
-                        isActive
-                            ? "border-black bg-gray-50 shadow-lg scale-[1.02]"
-                            : "border-gray-200 bg-white hover:shadow-xl hover:-translate-y-1"
-                    }`}
+                                                ${isActive
+                                                    ? "border-orange-500 bg-white shadow-lg shadow-orange-100 scale-[1.02] ring-1 ring-orange-500"
+                                                    : "border-slate-200 bg-white hover:border-orange-300 hover:shadow-md"
+                                                }`}
                                             >
-                                                {/* Gradient hover glow */}
-                                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-gradient-to-br from-purple-100/40 via-transparent to-blue-100/40" />
-
-                                                {/* Icon bubble */}
-                                                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-100 flex items-center justify-center mb-2 sm:mb-3 mx-auto group-hover:bg-black group-hover:text-white transition">
-                                                    <span className="text-xs sm:text-sm">
-                                                        {i + 1}
-                                                    </span>
+                                                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-100 flex items-center justify-center mb-2 sm:mb-3 mx-auto group-hover:bg-orange-500 group-hover:text-white transition-colors duration-300">
+                                                    <span className="text-xs sm:text-sm font-bold">{i + 1}</span>
                                                 </div>
-
-                                                {/* Sub industry name */}
-                                                <span className="text-xs sm:text-sm text-center block text-gray-800 group-hover:text-black">
+                                                <span className="text-xs sm:text-sm text-center block font-bold text-slate-600 group-hover:text-slate-900">
                                                     {sub.name}
                                                 </span>
-
-                                                {/* Active indicator */}
                                                 {isActive && (
-                                                    <div className="absolute top-2 right-2 w-2.5 h-2.5 rounded-full bg-black" />
+                                                    <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-orange-500" />
                                                 )}
                                             </div>
                                         );
@@ -348,42 +354,52 @@ export default function LandingPage() {
                             </div>
                         </div>
 
-                        {/* CARD 2 */}
-                        <div className="border border-gray-200 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-sm bg-gray-100 relative overflow-hidden">
-                            {/* subtle animated glow */}
-                            <div className="absolute -top-20 -right-20 w-60 h-60 bg-purple-300 rounded-full blur-3xl opacity-30" />
+                        {/* CARD 2 - Prompt/Brand Description */}
+                        <div className="border border-slate-200 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-sm bg-slate-50 relative overflow-hidden">
+                            {/* Subtle Brand Glow */}
+                            <div className="absolute -top-20 -right-20 w-60 h-60 bg-orange-200 rounded-full blur-3xl opacity-20" />
 
                             <div className="flex items-center gap-3 mb-5 sm:mb-6">
-                                <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-black text-white flex items-center justify-center text-sm font-semibold">
+                                <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-slate-900 text-white flex items-center justify-center text-sm font-black">
                                     2
                                 </span>
-                                <h3 className="text-lg sm:text-xl font-semibold">
-                                    Describe Your Brand (the prompt)
+                                <h3 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
+                                    Describe Your Brand
                                 </h3>
                             </div>
 
-                            <textarea
-                                className="w-full min-h-[140px] sm:min-h-[180px] p-4 bg-white rounded-2xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black resize-none text-sm sm:text-base mb-4"
-                                placeholder="Promote my coffee shop in Bangalore. Cozy vibe, cold brew specialist, local artist nights, Instagram-heavy audience."
-                            />
+                            
 
-                            <div className="flex flex-col sm:flex-row gap-3 mb-4">
-                                <button className="px-4 py-2 rounded-lg bg-gray-300 text-black text-xs sm:text-sm font-medium">
+                            
+                                
+                                    {/* ... existing code ... */}
+
+                                    <textarea
+                                        className="w-full min-h-[140px] sm:min-h-[180px] p-4 bg-white rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500 resize-none text-sm sm:text-base mb-4 font-medium text-slate-700 shadow-inner"
+                                        // INSERT ANIMATED PLACEHOLDER HERE
+                                        placeholder={animatedPlaceholder} 
+                                    />
+
+                                    {/* ... rest of the buttons and CTA ... */}
+                                
+                            
+
+                            <div className="flex flex-col sm:flex-row gap-3 mb-8">
+                                <button className="px-4 py-2 rounded-lg bg-white border border-slate-200 text-slate-700 text-xs sm:text-sm font-bold hover:border-orange-500 hover:text-orange-500 transition-all">
                                     Create Photos
                                 </button>
-
-                                <button className="px-4 py-2 bg-gray-300 rounded-lg border border-black text-xs sm:text-sm font-medium">
+                                <button className="px-4 py-2 bg-white rounded-lg border border-slate-200 text-slate-700 text-xs sm:text-sm font-bold hover:border-orange-500 hover:text-orange-500 transition-all">
                                     Create Reels
                                 </button>
                             </div>
 
-                            <p className="text-xs sm:text-sm px-20 text-gray-500">
-                                No credit card required • 2-min setup <br />
-                                100+ founders already automating
+                            <p className="text-center text-xs sm:text-sm text-slate-900 mb-8 font-medium">
+                              No credit card required • 2-min setup <br />
+                              100+ founders already automating
                             </p>
 
-                            {/* Power CTA Button */}
-                            <button className="w-full mt-6 sm:mt-8 py-3 sm:py-4 rounded-2xl bg-gradient-to-r from-gray-300 to-gray-500 text-white text-base sm:text-lg font-semibold">
+                            {/* Power CTA Button - Changed to Brand Black/Orange */}
+                            <button className="w-full py-3 sm:py-4 rounded-2xl bg-gradient-to-r from-orange-500 to-red-600 text-white text-base sm:text-lg font-black tracking-tight hover:brightness-110 transition-all active:scale-95 shadow-xl shadow-orange-200 uppercase">
                                 Generate 365 Days of Content
                             </button>
                         </div>
@@ -498,8 +514,9 @@ export default function LandingPage() {
                     </div>
                 </div>
             </section>
+        <Calender />
 
-            <section className="py-24 bg-white overflow-hidden">
+            <section id="who-we-help" className="py-12 bg-white overflow-hidden">
                 <div className="max-w-7xl mx-auto px-6 text-center">
                     {/* Gradient Badge with Floating Particle Motion */}
                     <div className="flex justify-center mb-6">
@@ -1537,20 +1554,13 @@ export default function LandingPage() {
 
                         {/*))*/}
                     </div>
-
-                    {/* Bottom CTA Button */}
-                    <div className="flex justify-center">
-                        <button className="px-10 h-14 rounded-full bg-black text-white text-sm font-semibold">
-                            Find Your Industry
-                        </button>
-                    </div>
                 </div>
             </section>
-            <section className="py-14 sm:py-24 bg-white overflow-hidden">
+            <section id="library" className="pt-2 pb-5 sm:pt-2 sm:pb-5 bg-white overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6">
                     {/* Floating Badge */}
                     <div className="flex justify-center mb-5 sm:mb-6">
-                        <span className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 text-white text-xs sm:text-sm font-semibold shadow-lg">
+                        <span className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 rounded-full bg-gradient-to-r from-orange-500 to-red-600 text-white text-xs sm:text-sm font-semibold shadow-lg">
                             <SparklesIcon className="w-4 h-4 text-white" />
                             10,000+ Professional Templates
                         </span>
@@ -1678,7 +1688,7 @@ export default function LandingPage() {
                 {/* Assuming PricingSection is robust, otherwise wrap it */}
                 <PricingSection />
             </div>
-            
+
             <section className="py-14 sm:py-20 bg-white overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
                     {/* Title */}

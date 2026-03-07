@@ -1,5 +1,5 @@
 "use client";
-teho;
+
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -47,9 +47,9 @@ export default function Header() {
                     {/* Desktop Links */}
                     <div className="hidden md:flex items-center gap-8 text-sm font-medium text-black">
                         <Link href="/">Home</Link>
-                        <Link href="#features">Features</Link>
-                        <Link href="#who-we-help">Who We Help</Link>
-                        <Link href="#pricing">Pricing</Link>
+                        <Link href="/#who-we-help">Who We Help</Link>
+                        <Link href="/#library">Library</Link>
+                        <Link href="/#pricing">Pricing</Link>
 
                         {/* Resources Dropdown */}
                         <div className="relative group">
@@ -58,7 +58,7 @@ export default function Header() {
                             </span>
                             <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
                                 <Link
-                                    href="/blog"
+                                    href="https://blog.shoutlyai.com/"
                                     className="block px-4 py-2 hover:bg-gray-100"
                                 >
                                     Blog
